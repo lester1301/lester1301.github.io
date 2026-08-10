@@ -41,47 +41,51 @@ body{
     height: 100px;
 
     margin-bottom: 20px;
-
     padding: 15px 20px;
 
     display: flex;
     flex-direction: column;
 
-    justify-content: space-between;
-
-    align-items: stretch;
+    align-items: flex-end;
+    justify-content: center;
 
     overflow: hidden;
 
     border-radius: 15px;
 
     background: #0d1117;
-
     color: white;
 }
 
+/* Calculation expression */
 .expression {
-    text-align: left;
+    width: 100%;
 
-    font-size: 18px;
-
-    color: #8b949e;
+    text-align: right;
 
     min-height: 25px;
 
-    overflow: hidden;
-}
+    color: #8b949e;
 
-.result {
-    text-align: left;
-
-    font-size: 40px;
-
-    font-weight: 500;
-
-    overflow: hidden;
+    font-size: 18px;
 
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Main result */
+.result {
+    width: 100%;
+
+    text-align: right;
+
+    font-size: 40px;
+    font-weight: 500;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .buttons{
     display:grid;
@@ -248,3 +252,39 @@ button.keyboard-active {
     line-height: 1.5;
 }
 
+@media (max-width: 500px) {
+
+    .calculator {
+        width: calc(100% - 30px);
+
+        padding: 20px;
+
+        border-radius: 22px;
+    }
+
+    .display {
+        height: 110px;
+
+        padding: 15px;
+    }
+
+    .expression {
+        font-size: 16px;
+    }
+
+    .result {
+        font-size: 34px;
+    }
+
+    button {
+        height: 60px;
+
+        font-size: 18px;
+
+        border-radius: 14px;
+    }
+
+    .buttons {
+        gap: 10px;
+    }
+}
