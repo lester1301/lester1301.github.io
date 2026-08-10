@@ -1,4 +1,5 @@
-const display = document.querySelector(".display");
+const expression = document.querySelector(".expression");
+const resultDisplay = document.querySelector(".result");
 
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
@@ -9,68 +10,80 @@ const plusMinusButton = document.querySelector(".plus-minus");
 const percentageButton = document.querySelector(".percentage");
 const backspaceButton = document.querySelector(".backspace");
 
+
+// ========================================
+// CALCULATOR VARIABLES
+// ========================================
+
 let firstNumber = "";
 let operator = "";
+
 let justCalculated = false;
 
 
-// ================= BUTTON ANIMATION =================
-
-function animateButton(button) {
-
-    if (!button) return;
-
-    button.classList.add("keyboard-active");
-
-    setTimeout(function() {
-
-        button.classList.remove("keyboard-active");
-
-    }, 100);
-
-}
-
-
-// ================= NUMBER BUTTONS =================
+// ========================================
+// NUMBER BUTTONS
+// ========================================
 
 numberButtons.forEach(function(button) {
 
     button.addEventListener("click", function() {
 
+        // Agar abhi calculation hui hai
+        // aur user naya number press karta hai
         if (justCalculated) {
 
-            display.innerText = "";
+            expression.innerText = "";
+
+            resultDisplay.innerText = "0";
 
             firstNumber = "";
             operator = "";
 
             justCalculated = false;
-
         }
+
 
         // Decimal
         if (button.innerText === ".") {
 
-            if (!display.innerText.includes(".")) {
+            if (!resultDisplay.innerText.includes(".")) {
 
-                display.innerText += ".";
+                resultDisplay.innerText += ".";
 
             }
 
         }
 
-        // Numbers
+        // Normal number
         else {
 
-            if (display.innerText === "0") {
+            if (resultDisplay.innerText === "0") {
 
-                display.innerText = button.innerText;
-
-            } else {
-
-                display.innerText += button.innerText;
+                resultDisplay.innerText = button.innerText;
 
             }
+
+            else {
+
+                resultDisplay.innerText += button.innerText;
+
+            }
+
+        }
+
+
+        // Agar operator already select hai
+        // toh expression update karo
+
+        if (operator !== "") {
+
+            expression.innerText =
+                firstNumber +
+                " " +
+                operator +
+                " " +
+                resultDisplay.innerText;
 
         }
 
@@ -79,36 +92,43 @@ numberButtons.forEach(function(button) {
 });
 
 
-// ================= OPERATORS =================
+// ========================================
+// OPERATOR BUTTONS
+// ========================================
 
 operatorButtons.forEach(function(button) {
 
     button.addEventListener("click", function() {
 
-        // Agar abhi-abhi calculation hui hai
+        const selectedOperator = button.innerText;
+
+
+        // Agar calculation ke baad operator press hua
+        // Example: 10 + 5
+
         if (justCalculated) {
 
-            firstNumber = display.innerText;
+            firstNumber = resultDisplay.innerText;
 
-            operator = button.innerText;
+            operator = selectedOperator;
 
-            display.innerText = "";
+            expression.innerText =
+                firstNumber + " " + operator;
+
+            resultDisplay.innerText = "0";
 
             justCalculated = false;
 
             return;
-
         }
 
 
-        // Agar calculation already chal rahi hai
-        if (
-            firstNumber !== "" &&
-            operator !== "" &&
-            display.innerText !== ""
-        ) {
+        // Agar pehle se first number aur operator hai
+        // Example: 7 × 8 ke baad + press
 
-            const secondNumber = display.innerText;
+        if (firstNumber !== "" && operator !== "") {
+
+            const secondNumber = resultDisplay.innerText;
 
             let result;
 
@@ -144,14 +164,18 @@ operatorButtons.forEach(function(button) {
 
                 if (Number(secondNumber) === 0) {
 
-                    display.innerText = "Error";
+                    expression.innerText = "";
+
+                    resultDisplay.innerText = "Error";
 
                     firstNumber = "";
                     operator = "";
 
-                    return;
+                    justCalculated = true;
 
+                    return;
                 }
+
 
                 result =
                     Number(firstNumber) /
@@ -160,46 +184,62 @@ operatorButtons.forEach(function(button) {
             }
 
 
-            display.innerText = result;
+            // Result ko next calculation ka first number banao
 
             firstNumber = result;
 
         }
 
-        else {
 
-            firstNumber = display.innerText;
+        // Agar first number abhi set nahi hai
+
+        else if (firstNumber === "") {
+
+            firstNumber = resultDisplay.innerText;
 
         }
 
 
-        operator = button.innerText;
+        operator = selectedOperator;
 
-        display.innerText = "";
+
+        // Expression show karo
+
+        expression.innerText =
+            firstNumber + " " + operator;
+
+
+        // Next number ke liye display reset
+
+        resultDisplay.innerText = "0";
 
     });
 
 });
 
 
-// ================= EQUALS =================
+// ========================================
+// EQUALS BUTTON
+// ========================================
 
 equalsButton.addEventListener("click", function() {
 
-    if (
-        firstNumber === "" ||
-        operator === ""
-    ) {
+    // Agar koi operator hi nahi hai
+    // toh kuch mat karo
+
+    if (firstNumber === "" || operator === "") {
 
         return;
 
     }
 
 
-    const secondNumber = display.innerText;
+    const secondNumber = resultDisplay.innerText;
 
     let result;
 
+
+    // Addition
 
     if (operator === "+") {
 
@@ -210,6 +250,8 @@ equalsButton.addEventListener("click", function() {
     }
 
 
+    // Subtraction
+
     if (operator === "−") {
 
         result =
@@ -218,6 +260,8 @@ equalsButton.addEventListener("click", function() {
 
     }
 
+
+    // Multiplication
 
     if (operator === "×") {
 
@@ -228,18 +272,29 @@ equalsButton.addEventListener("click", function() {
     }
 
 
+    // Division
+
     if (operator === "÷") {
 
         if (Number(secondNumber) === 0) {
 
-            display.innerText = "Error";
+            expression.innerText =
+                firstNumber +
+                " " +
+                operator +
+                " " +
+                secondNumber;
+
+            resultDisplay.innerText = "Error";
 
             firstNumber = "";
             operator = "";
 
-            return;
+            justCalculated = true;
 
+            return;
         }
+
 
         result =
             Number(firstNumber) /
@@ -248,22 +303,40 @@ equalsButton.addEventListener("click", function() {
     }
 
 
-    display.innerText = result;
+    // ====================================
+    // FINAL DISPLAY
+    // ====================================
 
-    firstNumber = result;
+    expression.innerText =
+        firstNumber +
+        " " +
+        operator +
+        " " +
+        secondNumber;
+
+
+    resultDisplay.innerText = result;
+
+
+    // Calculation complete
 
     justCalculated = true;
 
 });
 
 
-// ================= CLEAR =================
+// ========================================
+// CLEAR / AC
+// ========================================
 
 clearButton.addEventListener("click", function() {
 
-    display.innerText = "0";
+    expression.innerText = "";
+
+    resultDisplay.innerText = "0";
 
     firstNumber = "";
+
     operator = "";
 
     justCalculated = false;
@@ -271,35 +344,115 @@ clearButton.addEventListener("click", function() {
 });
 
 
-// ================= PLUS / MINUS =================
+// ========================================
+// PLUS / MINUS
+// ========================================
 
 plusMinusButton.addEventListener("click", function() {
 
-    if (display.innerText !== "0") {
+    if (resultDisplay.innerText !== "0") {
 
-        display.innerText =
-            -Number(display.innerText);
+        resultDisplay.innerText =
+            -Number(resultDisplay.innerText);
+
+
+        // Expression update
+
+        if (operator !== "") {
+
+            expression.innerText =
+                firstNumber +
+                " " +
+                operator +
+                " " +
+                resultDisplay.innerText;
+
+        }
 
     }
 
 });
 
 
-// ================= PERCENTAGE =================
+// ========================================
+// PERCENTAGE
+// ========================================
 
 percentageButton.addEventListener("click", function() {
 
-    if (display.innerText !== "0") {
+    if (resultDisplay.innerText !== "0") {
 
-        display.innerText =
-            Number(display.innerText) / 100;
+        resultDisplay.innerText =
+            Number(resultDisplay.innerText) / 100;
+
+
+        // Expression update
+
+        if (operator !== "") {
+
+            expression.innerText =
+                firstNumber +
+                " " +
+                operator +
+                " " +
+                resultDisplay.innerText;
+
+        }
 
     }
 
 });
 
 
-// ================= OPERATOR FUNCTION =================
+// ========================================
+// BACKSPACE
+// ========================================
+
+backspaceButton.addEventListener("click", function() {
+
+    // Agar calculation ke baad backspace dabaya
+    // toh result ko edit karne denge
+
+    if (resultDisplay.innerText === "Error") {
+
+        return;
+
+    }
+
+
+    if (resultDisplay.innerText.length > 1) {
+
+        resultDisplay.innerText =
+            resultDisplay.innerText.slice(0, -1);
+
+    }
+
+    else {
+
+        resultDisplay.innerText = "0";
+
+    }
+
+
+    // Expression update
+
+    if (operator !== "") {
+
+        expression.innerText =
+            firstNumber +
+            " " +
+            operator +
+            " " +
+            resultDisplay.innerText;
+
+    }
+
+});
+
+
+// ========================================
+// OPERATOR HELPER
+// ========================================
 
 function clickOperator(symbol) {
 
@@ -316,197 +469,138 @@ function clickOperator(symbol) {
 }
 
 
-// ================= BACKSPACE =================
-
-backspaceButton.addEventListener("click", function() {
-
-    if (display.innerText.length > 1) {
-
-        display.innerText =
-            display.innerText.slice(0, -1);
-
-    }
-
-    else {
-
-        display.innerText = "0";
-
-    }
-
-});
-
-
-// ================= KEYBOARD =================
+// ========================================
+// KEYBOARD SUPPORT
+// ========================================
 
 document.addEventListener("keydown", function(event) {
 
     const key = event.key;
 
 
-    // ================= NUMBERS =================
+    // ====================================
+    // NUMBER KEYS
+    // ====================================
 
     if (key >= "0" && key <= "9") {
 
         const button =
-            [...numberButtons].find(function(btn) {
+            Array.from(numberButtons).find(function(btn) {
 
                 return btn.innerText === key;
 
             });
 
-        animateButton(button);
 
+        if (button) {
 
-        if (justCalculated) {
-
-            display.innerText = key;
-
-            firstNumber = "";
-            operator = "";
-
-            justCalculated = false;
-
-        }
-
-        else if (display.innerText === "0") {
-
-            display.innerText = key;
-
-        }
-
-        else {
-
-            display.innerText += key;
+            button.click();
 
         }
 
     }
 
 
-    // ================= DECIMAL =================
+    // ====================================
+    // DECIMAL
+    // ====================================
 
     else if (key === ".") {
 
-        const button =
-            [...numberButtons].find(function(btn) {
+        const decimalButton =
+            Array.from(numberButtons).find(function(btn) {
 
                 return btn.innerText === ".";
 
             });
 
-        animateButton(button);
 
+        if (decimalButton) {
 
-        if (!display.innerText.includes(".")) {
-
-            display.innerText += ".";
+            decimalButton.click();
 
         }
 
     }
 
 
-    // ================= ADDITION =================
+    // ====================================
+    // ADDITION
+    // ====================================
 
     else if (key === "+") {
-
-        const button =
-            [...operatorButtons].find(function(btn) {
-
-                return btn.innerText === "+";
-
-            });
-
-        animateButton(button);
 
         clickOperator("+");
 
     }
 
 
-    // ================= SUBTRACTION =================
+    // ====================================
+    // SUBTRACTION
+    // ====================================
 
     else if (key === "-") {
-
-        const button =
-            [...operatorButtons].find(function(btn) {
-
-                return btn.innerText === "−";
-
-            });
-
-        animateButton(button);
 
         clickOperator("−");
 
     }
 
 
-    // ================= MULTIPLICATION =================
+    // ====================================
+    // MULTIPLICATION
+    // ====================================
 
     else if (key === "*") {
-
-        const button =
-            [...operatorButtons].find(function(btn) {
-
-                return btn.innerText === "×";
-
-            });
-
-        animateButton(button);
 
         clickOperator("×");
 
     }
 
 
-    // ================= DIVISION =================
+    // ====================================
+    // DIVISION
+    // ====================================
 
     else if (key === "/") {
 
-        const button =
-            [...operatorButtons].find(function(btn) {
-
-                return btn.innerText === "÷";
-
-            });
-
-        animateButton(button);
+        event.preventDefault();
 
         clickOperator("÷");
 
     }
 
 
-    // ================= ENTER =================
+    // ====================================
+    // ENTER
+    // ====================================
 
-    else if (key === "Enter") {
+    else if (key === "Enter" || key === "=") {
 
         event.preventDefault();
-
-        animateButton(equalsButton);
 
         equalsButton.click();
 
     }
 
 
-    // ================= ESCAPE / AC =================
+    // ====================================
+    // ESCAPE / AC
+    // ====================================
 
     else if (key === "Escape") {
-
-        animateButton(clearButton);
 
         clearButton.click();
 
     }
 
 
-    // ================= BACKSPACE =================
+    // ====================================
+    // BACKSPACE
+    // ====================================
 
     else if (key === "Backspace") {
 
-        animateButton(backspaceButton);
+        event.preventDefault();
 
         backspaceButton.click();
 
