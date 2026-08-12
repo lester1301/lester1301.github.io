@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Shopping Cart | ShopEase</title>
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="container nav-container">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                Shop<span>Ease</span>
+            </a>
+
+
+            <nav class="nav-menu">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="products.html">
+                    Products
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </nav>
+
+
+            <div class="nav-actions">
+
+                <button
+                    class="search-btn"
+                    type="button"
+                    aria-label="Search"
+                >
+                    🔍
+                </button>
+
+
+                <a
+                    href="cart.html"
+                    class="cart-btn"
+                >
+
+                    🛒
+
+                    <span class="cart-count">
+                        0
+                    </span>
+
+                </a>
+
+
+                <button
+                    class="menu-btn"
+                    type="button"
+                    aria-label="Open Menu"
+                >
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         CART
+    ========================== -->
+
+    <main>
+
+        <section class="cart-section section">
+
+            <div class="container">
+
+
+                <!-- Page Heading -->
+
+                <div class="cart-heading">
+
+                    <p class="section-tag">
+                        YOUR SHOPPING BAG
+                    </p>
+
+                    <h1>
+                        Shopping Cart
+                    </h1>
+
+                    <p>
+                        Review your items before checkout.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Cart Layout -->
+
+                <div
+                    class="cart-layout"
+                    id="cart-layout"
+                >
+
+
+                    <!-- =================
+                         CART ITEMS
+                    ================== -->
+
+                    <div class="cart-items">
+
+                        <div
+                            id="cart-container"
+                        >
+                        </div>
+
+
+                        <!-- Empty Cart -->
+
+                        <div
+                            class="empty-cart"
+                            id="empty-cart"
+                        >
+
+                            <div class="empty-cart-icon">
+                                🛒
+                            </div>
+
+                            <h2>
+                                Your cart is empty
+                            </h2>
+
+                            <p>
+                                Looks like you haven't
+                                added anything yet.
+                            </p>
+
+
+                            <a
+                                href="products.html"
+                                class="btn btn-primary"
+                            >
+                                Start Shopping
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================
+                         CART SUMMARY
+                    ================== -->
+
+                    <aside
+                        class="cart-summary"
+                        id="cart-summary"
+                    >
+
+                        <h2>
+                            Order Summary
+                        </h2>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong id="cart-subtotal">
+                                NPR 0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Shipping
+                            </span>
+
+                            <strong id="cart-shipping">
+                                FREE
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-divider">
+                        </div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong id="cart-total">
+                                NPR 0
+                            </strong>
+
+                        </div>
+
+
+                        <button
+                            class="checkout-btn"
+                            id="checkout-btn"
+                            type="button"
+                        >
+                            Proceed to Checkout
+                        </button>
+
+
+                        <a
+                            href="products.html"
+                            class="continue-shopping"
+                        >
+                            ← Continue Shopping
+                        </a>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-container">
+
+
+            <div class="footer-brand">
+
+                <a
+                    href="index.html"
+                    class="logo"
+                >
+                    Shop<span>Ease</span>
+                </a>
+
+                <p>
+                    Your everyday online shopping destination.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="products.html">
+                    Products
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="contact.html">
+                    Contact
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>
+                    Customer Care
+                </h3>
+
+                <a href="#">
+                    Shipping
+                </a>
+
+                <a href="#">
+                    Returns
+                </a>
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h3>
+                    Follow Us
+                </h3>
+
+                <div class="social-links">
+
+                    <a href="#">
+                        Instagram
+                    </a>
+
+                    <a href="#">
+                        Facebook
+                    </a>
+
+                    <a href="#">
+                        Twitter
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 ShopEase. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="js/products.js"></script>
+
+    <script src="js/cart.js"></script>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>
