@@ -279,12 +279,12 @@ img {
 ========================= */
 
 .section {
-    padding: 85px 0;
+    padding: 50px 0;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: 45px;
+    margin-bottom: 30px;
 }
 
 .section-tag {
@@ -323,7 +323,7 @@ img {
     padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: top;
     position: relative;
     overflow: hidden;
     border: 1px solid #eeeaf4;
@@ -2683,4 +2683,73 @@ print(f"Lines: {len(css.splitlines())}")
 .hero-content {
     position: relative;
     z-index: 10;
+}
+
+/* =========================
+   REDUCE SECTION SPACING
+========================= */
+
+.categories.section,
+.featured-products.section {
+    padding-top: 35px !important;
+    padding-bottom: 35px !important;
+}
+
+.categories .section-header,
+.featured-products .section-header {
+    margin-bottom: 25px !important;
+}
+
+/* =========================
+   HERO + CATEGORIES SPACING FIX
+========================= */
+
+/* Navbar ke neeche hero ko chipka do */
+.hero {
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero image ke around koi extra gap nahi */
+.hero-image {
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero image ko block rakho taaki bottom whitespace na aaye */
+.hero-image img {
+    display: block;
+    margin: 0;
+}
+
+/* Hero ke baad categories immediately start */
+.section {
+    margin: 0;
+}
+
+/* Categories section ka top gap remove */
+.categories,
+.category-section {
+    margin-top: 0;
+    padding-top: 0;
+}
+.hero-container {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.hero-image {
+    margin-top: 0;
+}
+
+.hero-image img {
+    margin-top: 0;
+}
+
+.project-preview img {
+    width: 5%;
+    height: 5%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
 }
