@@ -86,29 +86,32 @@
         height: 260px !important;
     }
 }
+
+
 </style>
 </head>
 
 <body>
+<header>
 
-    <!-- ==================== HEADER ==================== -->
+    <div class="logo">
+        <h1>ANIL</h1>
+    </div>
 
-    <header>
+    <button class="menu-toggle" aria-label="Open menu">
+        ☰
+    </button>
 
-        <div class="logo">
-            <h1>ANIL</h1>
-        </div>
+    <nav id="navbar">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-
-    </header>
+</header>
 
 
     <!-- ==================== HERO ==================== -->
@@ -327,8 +330,34 @@
 
         </div>
 
-    </section>
+    <script>
+const menuToggle = document.querySelector(".menu-toggle");
+const navbar = document.querySelector("nav");
 
+menuToggle.addEventListener("click", () => {
+    navbar.classList.toggle("active");
+});
+
+document.querySelectorAll("nav a").forEach(link => {
+    link.addEventListener("click", function () {
+
+        const targetId = this.getAttribute("href");
+        const target = document.querySelector(targetId);
+
+        if (target) {
+            navbar.classList.remove("active");
+
+            setTimeout(() => {
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }, 100);
+        }
+    });
+});
+</script>
+   
 </body>
 
 </html>
