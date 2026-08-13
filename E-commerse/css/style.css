@@ -1,4 +1,3 @@
-
 /* =========================
    RESET & GLOBAL
 ========================= */
@@ -2616,39 +2615,40 @@ img {
         font-size: 19px;
     }
 }
-'''
 
-path = Path("/mnt/data/style-clean-responsive.css")
-path.write_text(css, encoding="utf-8")
+/* =========================================================
+   HERO IMAGE SLIDER — FINAL
+   ---------------------------------------------------------
+   hero-slider.js only toggles the .active class.
+   All slides stay layered in the same box and fade smoothly.
+   ========================================================= */
 
-print(f"Created: {path}")
-print(f"Lines: {len(css.splitlines())}")
+.hero-image {
+    position: relative;
+    height: 100%;
+    min-height: 570px;
+    overflow: hidden;
+}
 
-/* =========================
-   HERO IMAGE SLIDER
-========================= */
-
-.hero-slide {
+.hero-image img.hero-slide {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    max-width: none;
+    display: block;
     object-fit: cover;
-
-    position: absolute;
-    top: 0;
-    left: 100%;
-
-    transition: left 0.7s ease;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease;
 }
 
-.hero-slide.active {
-    left: 0;
+.hero-image img.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-
-/* =========================
-   HERO CONTENT
-========================= */
-
+/* Keep text/buttons above the images */
 .hero-container {
     position: relative;
 }
@@ -2660,197 +2660,24 @@ print(f"Lines: {len(css.splitlines())}")
 
 .hero-buttons {
     position: relative;
-    z-index: 20;
+    z-index: 11;
 }
 
-
-/* =========================
-   HERO CONTENT ABOVE SLIDER
-========================= */
-
-.hero-container {
-    position: relative;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 10;
-}
-
-/* =========================
-   REDUCE SECTION SPACING
-========================= */
-
-.categories.section,
-.featured-products.section {
-    padding-top: 35px !important;
-    padding-bottom: 35px !important;
-}
-
-.categories .section-header,
-.featured-products .section-header {
-    margin-bottom: 25px !important;
-}
-
-/* =========================
-   HERO + CATEGORIES SPACING FIX
-========================= */
-
-/* Navbar ke neeche hero ko chipka do */
-.hero {
-    margin: 0;
-    padding: 0;
-}
-
-/* Hero image ke around koi extra gap nahi */
-.hero-image {
-    margin: 0;
-    padding: 0;
-}
-
-/* Hero image ko block rakho taaki bottom whitespace na aaye */
-.hero-image img {
-    display: block;
-    margin: 0;
-}
-
-/* Hero ke baad categories immediately start */
-.section {
-    margin: 0;
-}
-
-/* Categories section ka top gap remove */
-.categories,
-.category-section {
-    margin-top: 0;
-    padding-top: 0;
-}
-.hero-container {
-    margin-top: 0;
-    padding-top: 0;
-}
-
-.hero-image {
-    margin-top: 0;
-}
-
-.hero-image img {
-    margin-top: 0;
-}
-
-/* =========================================
-   PROJECT CARD — FINAL RESPONSIVE VERSION
-========================================= */
-
-.project-card {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-
-    align-items: center;
-    gap: 50px;
-
-    padding: 45px;
-
-    overflow: hidden;
-    box-sizing: border-box;
-}
-
-.project-content {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-}
-
-/* =========================================
-   PROJECT PREVIEW
-========================================= */
-
-.project-preview {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-
-    height: 340px;
-
-    overflow: hidden;
-
-    border-radius: 16px;
-    border: 1px solid rgba(168, 50, 232, 0.25);
-
-    background: #ffffff;
-
-    box-sizing: border-box;
-}
-
-.project-preview img {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    max-width: 100%;
-
-    object-fit: contain;
-    object-position: top center;
-
-    box-sizing: border-box;
-}
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 900px) {
-
-    .project-card {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding: 35px;
-    }
-
-    .project-preview {
-        height: 360px;
-    }
-
-}
-
-/* =========================================
-   MOBILE
-========================================= */
-
+/* Mobile */
 @media (max-width: 768px) {
-
-    .project-card {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding: 28px 22px;
-    }
-
-    .project-preview {
+    .hero-image {
+        min-height: 300px;
         height: 300px;
-        border-radius: 14px;
     }
-
 }
-
-/* =========================================
-   SMALL PHONES
-========================================= */
 
 @media (max-width: 520px) {
-
-    .project-card {
-        padding: 22px 16px;
-        gap: 20px;
+    .hero-image {
+        min-height: 260px;
+        height: 260px;
     }
-
-    .project-preview {
-        height: 250px;
-        border-radius: 12px;
-    }
-
 }
+
+/* =========================================================
+   END OF STYLE.CSS
+   ====================
