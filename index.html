@@ -8,6 +8,85 @@
     <title>Anil Portfolio</title>
 
     <link rel="stylesheet" href="style.css">
+    <style>
+/* ===== SHOP EASE PROJECT PREVIEW TEST FIX ===== */
+
+.project-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+
+    gap: 40px !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box !important;
+}
+
+.project-card > * {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.project-content {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+.project-preview {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    height: 300px !important;
+
+    overflow: hidden !important;
+
+    box-sizing: border-box !important;
+}
+
+.project-preview img {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    height: 100% !important;
+
+    object-fit: cover !important;
+
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 900px) {
+    .project-card {
+        grid-template-columns: 1fr !important;
+    }
+
+    .project-preview {
+        width: 100% !important;
+        height: 320px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-card {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .project-preview {
+        width: 100% !important;
+        height: 260px !important;
+    }
+}
+</style>
 </head>
 
 <body>

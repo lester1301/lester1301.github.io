@@ -1,11 +1,3 @@
-from pathlib import Path
-
-css = r'''/* =========================================================
-   SHOP EASE — CLEAN MASTER STYLESHEET
-   ---------------------------------------------------------
-   Same visual system + same class names/functions.
-   Cleaned duplicate rules and consolidated responsive CSS.
-   ========================================================= */
 
 /* =========================
    RESET & GLOBAL
@@ -2746,10 +2738,119 @@ print(f"Lines: {len(css.splitlines())}")
     margin-top: 0;
 }
 
+/* =========================================
+   PROJECT CARD — FINAL RESPONSIVE VERSION
+========================================= */
+
+.project-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    align-items: center;
+    gap: 50px;
+
+    padding: 45px;
+
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.project-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* =========================================
+   PROJECT PREVIEW
+========================================= */
+
+.project-preview {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    height: 340px;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+    border: 1px solid rgba(168, 50, 232, 0.25);
+
+    background: #ffffff;
+
+    box-sizing: border-box;
+}
+
 .project-preview img {
-    width: 5%;
-    height: 5%;
-    object-fit: cover;
-    border-radius: 10px;
     display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-width: 100%;
+
+    object-fit: contain;
+    object-position: top center;
+
+    box-sizing: border-box;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .project-card {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 35px;
+    }
+
+    .project-preview {
+        height: 360px;
+    }
+
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .project-card {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 28px 22px;
+    }
+
+    .project-preview {
+        height: 300px;
+        border-radius: 14px;
+    }
+
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 520px) {
+
+    .project-card {
+        padding: 22px 16px;
+        gap: 20px;
+    }
+
+    .project-preview {
+        height: 250px;
+        border-radius: 12px;
+    }
+
 }
