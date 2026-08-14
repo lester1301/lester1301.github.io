@@ -413,7 +413,7 @@ async function getAIResponse(message) {
 
         const response =
             await fetch(
-                "http://localhost:3000/api/chat",
+                "https://shopease-ai-backend.onrender.com/api/chat",
                 {
                     method: "POST",
 
