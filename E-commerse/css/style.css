@@ -2682,4 +2682,752 @@ img {
    END OF STYLE.CSS
    ====================
 
-   
+   /* =========================================================
+   SHOEASE AI CHATBOT
+========================================================= */
+
+
+/* =========================================================
+   CHATBOT FLOATING BUTTON
+========================================================= */
+
+.chatbot-button {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: linear-gradient(135deg, #9130df, #c52de5);
+    color: #ffffff;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    box-shadow: 0 10px 30px rgba(145, 48, 223, 0.35);
+
+    z-index: 9999;
+
+    transition: all 0.3s ease;
+}
+
+.chatbot-button:hover {
+    transform: translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 15px 35px rgba(145, 48, 223, 0.45);
+}
+
+.chatbot-button:active {
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   CHATBOT WINDOW
+========================================================= */
+
+.chatbot-window {
+    position: fixed;
+
+    right: 25px;
+    bottom: 95px;
+
+    width: 360px;
+    height: 500px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 1px solid #e8d9f2;
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(40, 20, 70, 0.20);
+
+    z-index: 9998;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(20px) scale(0.96);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+/* Open chatbot */
+
+.chatbot-window.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0) scale(1);
+}
+
+
+/* =========================================================
+   CHATBOT HEADER
+========================================================= */
+
+.chatbot-header {
+    min-height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #5422a8,
+            #8c27c9,
+            #c52de5
+        );
+
+    color: #ffffff;
+
+    flex-shrink: 0;
+}
+
+
+/* Header title */
+
+.chatbot-title {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* Header avatar */
+
+.chatbot-avatar {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    font-size: 22px;
+}
+
+
+/* Header title text */
+
+.chatbot-title h3 {
+    margin: 0 0 3px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.chatbot-title span {
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 10px;
+}
+
+
+/* Close button */
+
+.chatbot-close {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.15);
+
+    color: #ffffff;
+
+    font-size: 23px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.chatbot-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   CHAT MESSAGES AREA
+========================================================= */
+
+.chatbot-messages {
+    flex: 1;
+
+    padding: 18px 15px;
+
+    overflow-y: auto;
+
+    background: #faf9fc;
+
+    scrollbar-width: thin;
+}
+
+
+/* =========================================================
+   COMMON MESSAGE
+========================================================= */
+
+.chat-message {
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-bottom: 15px;
+}
+
+
+/* Message avatar */
+
+.message-avatar {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #f0ddff;
+
+    font-size: 15px;
+}
+
+
+/* Message content */
+
+.message-content {
+    max-width: 78%;
+
+    padding: 11px 13px;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 12px rgba(40, 20, 70, 0.06);
+}
+
+
+/* Message paragraphs */
+
+.message-content p {
+    margin: 0 0 7px;
+
+    color: #555566;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+.message-content p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   BOT MESSAGE
+   LEFT SIDE
+========================================================= */
+
+.bot-message {
+    justify-content: flex-start;
+}
+
+.bot-message .message-avatar {
+    order: 1;
+
+    background: #f0ddff;
+}
+
+.bot-message .message-content {
+    order: 2;
+
+    background: #ffffff;
+}
+
+.bot-message .message-content p {
+    color: #555566;
+}
+
+
+/* =========================================================
+   USER MESSAGE
+   RIGHT SIDE
+========================================================= */
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.user-message .message-content {
+    order: 1;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9130df,
+            #c52de5
+        );
+}
+
+.user-message .message-content p {
+    color: #ffffff;
+}
+
+.user-message .message-avatar {
+    order: 2;
+
+    background: #ead5ff;
+}
+
+
+/* =========================================================
+   CHATBOT INPUT AREA
+========================================================= */
+
+.chatbot-input-area {
+    min-height: 68px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px;
+
+    border-top: 1px solid #eeeaf2;
+
+    background: #ffffff;
+
+    flex-shrink: 0;
+}
+
+
+/* Input */
+
+.chatbot-input {
+    flex: 1;
+
+    width: 100%;
+    height: 44px;
+
+    padding: 0 13px;
+
+    border: 1px solid #ded9e5;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #faf9fc;
+
+    color: #30303d;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    transition: all 0.25s ease;
+}
+
+.chatbot-input:focus {
+    border-color: #a832e8;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(168, 50, 232, 0.08);
+}
+
+.chatbot-input::placeholder {
+    color: #9999a5;
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+.chatbot-send {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9130df,
+            #c52de5
+        );
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.chatbot-send:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 15px rgba(145, 48, 223, 0.25);
+}
+
+.chatbot-send:active {
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   PRODUCT RESULTS
+========================================================= */
+
+.chat-results-content {
+    max-width: 88%;
+}
+
+
+/* Product list */
+
+.chat-products-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+
+/* Product card */
+
+.chat-product-card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    padding: 8px;
+
+    border: 1px solid #eeeaf2;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    transition: all 0.25s ease;
+}
+
+.chat-product-card:hover {
+    border-color: #d9b9ee;
+
+    box-shadow:
+        0 5px 15px rgba(40, 20, 70, 0.08);
+}
+
+
+/* Product image */
+
+.chat-product-card img {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border-radius: 7px;
+
+    background: #f6f3f8;
+}
+
+
+/* Product information */
+
+.chat-product-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 2px;
+}
+
+
+/* Product name */
+
+.chat-product-info strong {
+    color: #30303d;
+
+    font-size: 10px;
+
+    line-height: 1.3;
+}
+
+
+/* Category */
+
+.chat-product-info span {
+    color: #9999a5;
+
+    font-size: 8px;
+}
+
+
+/* Price */
+
+.chat-product-info b {
+    color: #5422a8;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PRODUCT ACTION BUTTONS
+========================================================= */
+
+.chat-product-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 4px;
+}
+
+
+/* Common product buttons */
+
+.chat-product-view,
+.chat-product-cart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 7px;
+
+    border: none;
+    border-radius: 5px;
+
+    font-size: 8px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+/* View Product */
+
+.chat-product-view {
+    background: #f3e5fc;
+
+    color: #7b27b5;
+}
+
+.chat-product-view:hover {
+    background: #a832e8;
+
+    color: #ffffff;
+}
+
+
+/* Add to Cart */
+
+.chat-product-cart {
+    background: #a832e8;
+
+    color: #ffffff;
+}
+
+.chat-product-cart:hover {
+    background: #7b27b5;
+
+    transform: translateY(-1px);
+}
+
+
+/* Added / disabled */
+
+.chat-product-cart:disabled {
+    opacity: 0.7;
+
+    cursor: default;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   CHATBOT MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    /* Floating button */
+
+    .chatbot-button {
+        right: 16px;
+        bottom: 18px;
+
+        width: 52px;
+        height: 52px;
+
+        font-size: 22px;
+    }
+
+
+    /* Chat window */
+
+    .chatbot-window {
+        right: 12px;
+        left: 12px;
+
+        bottom: 82px;
+
+        width: auto;
+
+        height: min(
+            500px,
+            calc(100vh - 105px)
+        );
+
+        border-radius: 16px;
+    }
+
+
+    /* Header */
+
+    .chatbot-header {
+        min-height: 65px;
+    }
+
+    .chatbot-title h3 {
+        font-size: 13px;
+    }
+
+    .chatbot-title span {
+        font-size: 9px;
+    }
+
+
+    /* Messages */
+
+    .chatbot-messages {
+        padding: 14px;
+    }
+
+    .chat-message {
+        gap: 7px;
+    }
+
+    .message-content {
+        max-width: 82%;
+    }
+
+    .message-content p {
+        font-size: 10px;
+    }
+
+
+    /* Input */
+
+    .chatbot-input-area {
+        padding: 9px;
+    }
+
+    .chatbot-input {
+        height: 42px;
+
+        font-size: 11px;
+    }
+
+    .chatbot-send {
+        width: 42px;
+        height: 42px;
+    }
+
+
+    /* Product results */
+
+    .chat-results-content {
+        max-width: 88%;
+    }
+
+    .chat-product-card img {
+        width: 52px;
+        height: 52px;
+    }
+
+    .chat-product-info strong {
+        font-size: 9px;
+    }
+
+    .chat-product-info b {
+        font-size: 9px;
+    }
+}
