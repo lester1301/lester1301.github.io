@@ -15,6 +15,14 @@ const PORT = 3000;
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY
 });
+console.log(
+    "Gemini API key loaded:",
+    !!process.env.GEMINI_API_KEY,
+    "length:",
+    process.env.GEMINI_API_KEY?.length,
+    "last4:",
+    process.env.GEMINI_API_KEY?.slice(-4)
+);
 
 
 // =====================================================
