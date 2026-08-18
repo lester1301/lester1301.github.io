@@ -413,7 +413,7 @@ async function getAIResponse(message) {
 
         const response =
             await fetch(
-                "https://shopease-ai-backend.onrender.com/api/chat",
+                "https://lester1301-github-io.onrender.com/api/chat",
                 {
                     method: "POST",
 
