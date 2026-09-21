@@ -1,393 +1,354 @@
-/* =========================
-   PRODUCT DATA
-========================= */
-
-const products = [
-
-    {
-        id: 1,
-        name: "Classic Oversized T-Shirt",
-        category: "fashion",
-        categoryName: "Fashion",
-        price: 1499,
-        rating: 4.8,
-        reviews: 24,
-        image: "images/products/product-1.jpeg",
-        badge: "NEW"
-    },
-
-    {
-        id: 2,
-        name: "Urban Street Sneakers",
-        category: "shoes",
-        categoryName: "Shoes",
-        price: 3999,
-        rating: 4.7,
-        reviews: 18,
-        image: "images/products/product-2.jpeg",
-        badge: "SALE"
-    },
-
-    {
-        id: 3,
-        name: "Wireless Headphones",
-        category: "electronics",
-        categoryName: "Electronics",
-        price: 4999,
-        rating: 4.9,
-        reviews: 42,
-        image: "images/products/product-3.jpeg",
-        badge: "NEW"
-    },
-
-    {
-        id: 4,
-        name: "Minimal Smart Watch",
-        category: "accessories",
-        categoryName: "Accessories",
-        price: 6499,
-        rating: 4.6,
-        reviews: 31,
-        image: "images/products/product-4.jpeg",
-        badge: "-20%"
-    },
-
-    {
-        id: 5,
-        name: "Premium Cotton Hoodie",
-        category: "fashion",
-        categoryName: "Fashion",
-        price: 2499,
-        rating: 4.7,
-        reviews: 35,
-        image: "images/products/product-5.jpeg",
-        badge: "NEW"
-    },
-
-    {
-        id: 6,
-        name: "Everyday Running Shoes",
-        category: "shoes",
-        categoryName: "Shoes",
-        price: 3499,
-        rating: 4.5,
-        reviews: 21,
-        image: "images/products/product-6.jpeg",
-        badge: "SALE"
-    },
-
-    {
-        id: 7,
-        name: "Portable Bluetooth Speaker",
-        category: "electronics",
-        categoryName: "Electronics",
-        price: 2999,
-        rating: 4.6,
-        reviews: 27,
-        image: "images/products/product-7.jpeg",
-        badge: "NEW"
-    },
-
-    {
-        id: 8,
-        name: "Classic Leather Wallet",
-        category: "accessories",
-        categoryName: "Accessories",
-        price: 1299,
-        rating: 4.4,
-        reviews: 16,
-        image: "images/products/product-8.jpeg",
-        badge: ""
-    },
-
-    {
-        id: 9,
-        name: "Relaxed Fit Cargo Pants",
-        category: "fashion",
-        categoryName: "Fashion",
-        price: 2199,
-        rating: 4.6,
-        reviews: 19,
-        image: "images/products/product-9.jpeg",
-        badge: "NEW"
-    },
-
-    {
-        id: 10,
-        name: "Classic Casual Sneakers",
-        category: "shoes",
-        categoryName: "Shoes",
-        price: 4299,
-        rating: 4.8,
-        reviews: 29,
-        image: "images/products/product-10.jpeg",
-        badge: ""
-    },
-
-    {
-        id: 11,
-        name: "Smart Fitness Earbuds",
-        category: "electronics",
-        categoryName: "Electronics",
-        price: 2799,
-        rating: 4.5,
-        reviews: 23,
-        image: "images/products/product-11.jpeg",
-        badge: "SALE"
-    },
-
-    {
-        id: 12,
-        name: "Minimalist Analog Watch",
-        category: "accessories",
-        categoryName: "Accessories",
-        price: 5499,
-        rating: 4.7,
-        reviews: 37,
-        image: "images/products/product-12.jpeg",
-        badge: "NEW"
-    }
-
+/* Offline fallback catalogue.
+   The live catalogue comes from the server (Admin > Products). This copy is only used
+   if the server cannot be reached and nothing has been cached in the browser yet. */
+window.SEED_PRODUCTS = [
+  {
+    "id": 1,
+    "name": "Classic Oversized T-Shirt",
+    "category": "fashion",
+    "categoryName": "Fashion",
+    "price": 1499,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "A relaxed, drop-shoulder tee with a small chest print. Easy to wear with jeans, cargos or shorts.",
+    "features": [
+      "Oversized, relaxed fit",
+      "Soft and breathable fabric",
+      "Small chest print",
+      "Machine washable"
+    ],
+    "images": [
+      "images/products/product-1.jpg"
+    ],
+    "image": "images/products/product-1.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "badge": "NEW",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 2,
+    "name": "Urban Street Sneakers",
+    "category": "shoes",
+    "categoryName": "Shoes",
+    "price": 3999,
+    "comparePrice": 4999,
+    "stock": 25,
+    "description": "Black-and-white low-top sneakers with a cushioned sole and a grippy outsole for daily wear.",
+    "features": [
+      "Low-top black and white design",
+      "Cushioned sole",
+      "Grippy outsole",
+      "Lace-up fit"
+    ],
+    "images": [
+      "images/products/product-2.jpg"
+    ],
+    "image": "images/products/product-2.jpg",
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44"
+    ],
+    "badge": "",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 3,
+    "name": "Wireless Headphones",
+    "category": "electronics",
+    "categoryName": "Electronics",
+    "price": 4999,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "Over-ear wireless headphones with cushioned ear cups and an adjustable headband for long listening sessions.",
+    "features": [
+      "Bluetooth wireless connection",
+      "Cushioned over-ear cups",
+      "Adjustable headband",
+      "Foldable design"
+    ],
+    "images": [
+      "images/products/product-3.jpg"
+    ],
+    "image": "images/products/product-3.jpg",
+    "sizes": [],
+    "badge": "NEW",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 4,
+    "name": "Minimal Smart Watch",
+    "category": "accessories",
+    "categoryName": "Accessories",
+    "price": 6499,
+    "comparePrice": 8124,
+    "stock": 25,
+    "description": "A slim smart watch with a bright rectangular display and a soft silicone strap.",
+    "features": [
+      "Bright touch display",
+      "Soft silicone strap",
+      "Slim everyday design",
+      "Shows time, date and heart rate"
+    ],
+    "images": [
+      "images/products/product-4.jpg"
+    ],
+    "image": "images/products/product-4.jpg",
+    "sizes": [],
+    "badge": "",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 5,
+    "name": "Premium Cotton Hoodie",
+    "category": "fashion",
+    "categoryName": "Fashion",
+    "price": 2499,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "A soft sage-green hoodie with a kangaroo pocket and drawstring hood. Your go-to layer for cool days.",
+    "features": [
+      "Soft cotton feel",
+      "Drawstring hood",
+      "Front kangaroo pocket",
+      "Ribbed cuffs and hem"
+    ],
+    "images": [
+      "images/products/product-5.jpg"
+    ],
+    "image": "images/products/product-5.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "badge": "NEW",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 6,
+    "name": "Everyday Running Shoes",
+    "category": "shoes",
+    "categoryName": "Shoes",
+    "price": 3499,
+    "comparePrice": 4299,
+    "stock": 25,
+    "description": "Lightweight grey running shoes with a breathable knit upper and a cushioned midsole.",
+    "features": [
+      "Breathable knit upper",
+      "Cushioned midsole",
+      "Lightweight build",
+      "Lace-up fit"
+    ],
+    "images": [
+      "images/products/product-6.jpg"
+    ],
+    "image": "images/products/product-6.jpg",
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44"
+    ],
+    "badge": "",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 7,
+    "name": "Portable Bluetooth Speaker",
+    "category": "electronics",
+    "categoryName": "Electronics",
+    "price": 2999,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "A compact cylindrical Bluetooth speaker with a carry loop. Take your music anywhere.",
+    "features": [
+      "Bluetooth wireless connection",
+      "Compact cylindrical design",
+      "Carry loop",
+      "Fabric grille"
+    ],
+    "images": [
+      "images/products/product-7.jpg"
+    ],
+    "image": "images/products/product-7.jpg",
+    "sizes": [],
+    "badge": "NEW",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 8,
+    "name": "Classic Leather Wallet",
+    "category": "accessories",
+    "categoryName": "Accessories",
+    "price": 1299,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "A dark brown bi-fold wallet with stitched edges and slots for your cards and cash.",
+    "features": [
+      "Bi-fold design",
+      "Multiple card slots",
+      "Stitched edges",
+      "Slim pocket fit"
+    ],
+    "images": [
+      "images/products/product-8.jpg"
+    ],
+    "image": "images/products/product-8.jpg",
+    "sizes": [],
+    "badge": "",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 9,
+    "name": "Relaxed Fit Cargo Pants",
+    "category": "fashion",
+    "categoryName": "Fashion",
+    "price": 2199,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "Olive cargo pants with roomy pockets, a drawstring waist and elasticated cuffs.",
+    "features": [
+      "Relaxed fit",
+      "Multiple cargo pockets",
+      "Drawstring waist",
+      "Elasticated cuffs"
+    ],
+    "images": [
+      "images/products/product-9.jpg"
+    ],
+    "image": "images/products/product-9.jpg",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "badge": "NEW",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 10,
+    "name": "Classic Casual Sneakers",
+    "category": "shoes",
+    "categoryName": "Shoes",
+    "price": 4299,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "Clean white low-top sneakers that go with almost everything in your wardrobe.",
+    "features": [
+      "Clean white design",
+      "Low-top cut",
+      "Lace-up fit",
+      "Cushioned insole"
+    ],
+    "images": [
+      "images/products/product-10.jpg"
+    ],
+    "image": "images/products/product-10.jpg",
+    "sizes": [
+      "39",
+      "40",
+      "41",
+      "42",
+      "43",
+      "44"
+    ],
+    "badge": "",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 11,
+    "name": "Smart Fitness Earbuds",
+    "category": "electronics",
+    "categoryName": "Electronics",
+    "price": 2799,
+    "comparePrice": 3499,
+    "stock": 25,
+    "description": "True wireless earbuds with a compact charging case, made for workouts and daily commutes.",
+    "features": [
+      "True wireless design",
+      "Compact charging case",
+      "LED charge indicators",
+      "Bluetooth connection"
+    ],
+    "images": [
+      "images/products/product-11.jpg"
+    ],
+    "image": "images/products/product-11.jpg",
+    "sizes": [],
+    "badge": "",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  },
+  {
+    "id": 12,
+    "name": "Minimalist Analog Watch",
+    "category": "accessories",
+    "categoryName": "Accessories",
+    "price": 5499,
+    "comparePrice": 0,
+    "stock": 25,
+    "description": "A black-dial analog watch with gold-tone markers and a black leather strap.",
+    "features": [
+      "Black dial with gold-tone markers",
+      "Leather strap",
+      "Minimal, dressy look",
+      "Analog display"
+    ],
+    "images": [
+      "images/products/product-12.jpg"
+    ],
+    "image": "images/products/product-12.jpg",
+    "sizes": [],
+    "badge": "NEW",
+    "rating": 0,
+    "reviews": 0,
+    "sold": 0,
+    "seller": "ShopEase"
+  }
 ];
-
-
-/* =========================
-   PRODUCTS PAGE
-========================= */
-
-const productsContainer =
-    document.getElementById("products-container");
-
-
-if (productsContainer) {
-
-    const searchInput =
-        document.getElementById("product-search");
-
-    const categoryFilter =
-        document.getElementById("category-filter");
-
-    const sortSelect =
-        document.getElementById("sort-products");
-
-    const productCount =
-        document.getElementById("product-count");
-
-    const emptyProducts =
-        document.getElementById("empty-products");
-
-
-    /* =========================
-       DISPLAY PRODUCTS
-    ========================= */
-
-    function displayProducts(productList) {
-
-        productsContainer.innerHTML = "";
-
-
-        if (productList.length === 0) {
-
-            emptyProducts.style.display = "block";
-
-            productCount.textContent =
-                "No products found";
-
-            return;
-        }
-
-
-        emptyProducts.style.display = "none";
-
-
-        productList.forEach(product => {
-
-            const card =
-                document.createElement("article");
-
-            card.className = "product-card";
-
-
-            card.innerHTML = `
-
-                <div class="product-image">
-
-                    ${
-                        product.badge
-                            ? `
-                                <span class="product-badge ${
-                                    product.badge === "SALE" ||
-                                    product.badge.includes("%")
-                                        ? "sale"
-                                        : ""
-                                }">
-                                    ${product.badge}
-                                </span>
-                            `
-                            : ""
-                    }
-
-                    <img
-                        src="${product.image}"
-                        alt="${product.name}"
-                        loading="lazy"
-                    >
-
-                    <button
-                        class="wishlist-btn"
-                        data-id="${product.id}"
-                        type="button"
-                        aria-label="Add to wishlist"
-                    >
-                        ♡
-                    </button>
-
-                </div>
-
-
-                <div class="product-info">
-
-                    <p class="product-category">
-                        ${product.categoryName}
-                    </p>
-
-                    <h3>
-                        ${product.name}
-                    </h3>
-
-                    <div class="product-rating">
-
-                        ${"★".repeat(Math.floor(product.rating))}
-
-                        <span>
-                            (${product.reviews})
-                        </span>
-
-                    </div>
-
-                    <div class="product-bottom">
-
-                        <p class="product-price">
-                            NPR ${product.price.toLocaleString()}
-                        </p>
-
-                        <a
-                            href="product.html?id=${product.id}"
-                            class="add-cart-btn"
-                        >
-                            View
-                        </a>
-
-                    </div>
-
-                </div>
-
-            `;
-
-
-            productsContainer.appendChild(card);
-
-        });
-
-
-        productCount.textContent =
-            `Showing ${productList.length} product${
-                productList.length !== 1 ? "s" : ""
-            }`;
-    }
-
-
-    /* =========================
-       FILTER / SEARCH / SORT
-    ========================= */
-
-    function updateProducts() {
-
-        const searchTerm =
-            searchInput.value
-                .toLowerCase()
-                .trim();
-
-        const selectedCategory =
-            categoryFilter.value;
-
-        const selectedSort =
-            sortSelect.value;
-
-
-        let filteredProducts =
-            products.filter(product => {
-
-                const matchesSearch =
-                    product.name
-                        .toLowerCase()
-                        .includes(searchTerm);
-
-                const matchesCategory =
-                    selectedCategory === "all" ||
-                    product.category === selectedCategory;
-
-                return (
-                    matchesSearch &&
-                    matchesCategory
-                );
-
-            });
-
-
-        if (selectedSort === "low-high") {
-
-            filteredProducts.sort(
-                (a, b) => a.price - b.price
-            );
-
-        }
-
-        else if (selectedSort === "high-low") {
-
-            filteredProducts.sort(
-                (a, b) => b.price - a.price
-            );
-
-        }
-
-        else if (selectedSort === "rating") {
-
-            filteredProducts.sort(
-                (a, b) => b.rating - a.rating
-            );
-
-        }
-
-
-        displayProducts(filteredProducts);
-    }
-
-
-    /* =========================
-       EVENTS
-    ========================= */
-
-    searchInput.addEventListener(
-        "input",
-        updateProducts
-    );
-
-    categoryFilter.addEventListener(
-        "change",
-        updateProducts
-    );
-
-    sortSelect.addEventListener(
-        "change",
-        updateProducts
-    );
-
-
-    /* =========================
-       INITIAL LOAD
-    ========================= */
-
-    displayProducts(products);
-
-}

@@ -1,10 +1,13 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "ShopEase API: store, seller and admin backend",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "node dev.js",
+    "test": "node --test tests/api.test.js",
+    "test-gemini": "node test-gemini.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +19,8 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "openai": "^7.4.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

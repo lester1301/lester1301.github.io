@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact us | ShopEase</title>
+    <meta name="description" content="Questions about an order or a product? Send us a message.">
+    <meta name="theme-color" content="#0b0d1a">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d1a'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='800' font-size='34' text-anchor='middle' fill='%23b13cff'%3ES%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="contact">
+    <div id="site-header"></div>
+    <div class="page-head"><div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span id="ct-crumb">Contact us</span></nav>
+        <h1 id="ct-crumb-h">Contact us</h1><p>Questions about an order or a product? We're happy to help.</p>
+    </div></div>
+    <main class="section" style="padding-top:44px"><div class="container">
+        <div class="contact-grid">
+            <div class="card">
+                <form id="contact-form" style="display:grid;gap:16px" novalidate>
+                    <div class="form-grid">
+                        <div class="field"><label for="c-name">Your name</label><input class="input" id="c-name" maxlength="80" required></div>
+                        <div class="field"><label for="c-email">Email</label><input class="input" id="c-email" type="email" maxlength="120" required></div>
+                        <div class="field full"><label for="c-subject">Subject</label><input class="input" id="c-subject" maxlength="120" placeholder="e.g. Question about order SE-…"></div>
+                        <div class="field full"><label for="c-message">Message</label><textarea class="textarea" id="c-message" maxlength="2000" required></textarea></div>
+                    </div>
+                    <div class="alert alert-error" id="contact-error" hidden></div>
+                    <button class="btn btn-primary btn-lg" id="contact-btn" type="submit" style="justify-self:start">Send message</button>
+                </form>
+            </div>
+            <aside class="info-list" id="contact-info"></aside>
+        </div>
+        <div class="faq" style="margin-top:64px;max-width:820px">
+            <h2 style="font-size:26px;margin-bottom:10px">Frequently asked questions</h2>
+            <details><summary>How long does delivery take?</summary><p>It depends on your location and the seller. You'll see updates on the Track order page as your order is confirmed and shipped.</p></details>
+            <details><summary>Can I pay when the order arrives?</summary><p>Yes, cash on delivery is available on eligible orders. You can also pay in advance with eSewa, Khalti or bank transfer.</p></details>
+            <details><summary>Can I cancel or change my order?</summary><p>You can cancel from My account while the order is still at the "Order placed" stage. After that, please contact us with your order number.</p></details>
+            <details><summary>What is your return policy?</summary><p>Damaged, defective or wrong items can be returned within 7 days of delivery. See the Returns page for details.</p></details>
+        </div>
+    </div></main>
+    <div id="site-footer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>

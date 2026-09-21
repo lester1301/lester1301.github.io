@@ -2,628 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ShopEase | Online Store</title>
-
-    <!-- Google Font -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ShopEase | Fashion, shoes, electronics and accessories</title>
+    <meta name="description" content="Shop fashion, shoes, electronics and accessories online. Cash on delivery and fast delivery.">
+    <meta name="theme-color" content="#0b0d1a">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d1a'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='800' font-size='34' text-anchor='middle' fill='%23b13cff'%3ES%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+<body data-page="home">
+    <div id="site-header"></div>
+    <main>
+        <section class="hero" aria-roledescription="carousel" aria-label="Featured collections">
+            <article class="hero-slide is-active">
+                <img class="hero-img" src="images/banners/hero-1.jpg" alt="" fetchpriority="high">
+                <div class="container hero-copy">
+                    <h1>Elevate your everyday style</h1>
+                    <p>Premium everyday pieces, made for comfort and made to last.</p>
+                    <div class="hero-cta"><a class="btn btn-primary btn-lg" href="products.html?category=fashion">Shop fashion</a><a class="btn btn-ghost-light btn-lg" href="products.html?sort=new">New arrivals</a></div>
+                </div>
+            </article>
+            <article class="hero-slide" aria-hidden="true">
+                <img class="hero-img" src="images/banners/hero-2.jpg" alt="" loading="lazy">
+                <div class="container hero-copy">
+                    <h1>New season, fresh essentials</h1>
+                    <p>Tees, hoodies and layers in colours that go with everything.</p>
+                    <div class="hero-cta"><a class="btn btn-primary btn-lg" href="products.html?sort=new">Shop new arrivals</a></div>
+                </div>
+            </article>
+            <article class="hero-slide" aria-hidden="true">
+                <img class="hero-img" src="images/banners/hero-3.jpg" alt="" loading="lazy">
+                <div class="container hero-copy">
+                    <h1>Step out in comfort</h1>
+                    <p>Sneakers, caps and everyday basics for the way you move.</p>
+                    <div class="hero-cta"><a class="btn btn-primary btn-lg" href="products.html?category=shoes">Shop shoes</a><a class="btn btn-ghost-light btn-lg" href="products.html?category=accessories">Accessories</a></div>
+                </div>
+            </article>
+            <div class="hero-ui"><div class="container">
+                <div class="hero-dots" id="hero-dots"></div>
+                <div class="hero-arrows">
+                    <button id="hero-prev" type="button" aria-label="Previous slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                    <button id="hero-next" type="button" aria-label="Next slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                </div>
+            </div></div>
+        </section>
 
-<body>
+        <section class="trust" id="trust" aria-label="Why shop with us"></section>
 
-    <!-- ==================== NAVBAR ==================== -->
-
-    <header class="navbar">
-        <div class="container nav-container">
-
-            <!-- Logo -->
-            <a href="index.html" class="logo">
-                Shop<span>Ease</span>
-            </a>
-
-            <!-- Navigation -->
-            <nav class="nav-menu">
-                <a href="index.html" class="active">Home</a>
-                <a href="products.html">Products</a>
-                <a href="wishlist.html">
-    Wishlist
-</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-
-            <!-- Nav Actions -->
-            <div class="nav-actions">
-
-                <button class="search-btn" aria-label="Search">
-                    🔍
-                </button>
-
-                <a href="cart.html" class="cart-btn">
-                    🛒
-                    <span class="cart-count">0</span>
-                </a>
-
-                <button class="menu-btn" aria-label="Open Menu">
-                    ☰
-                </button>
-
-            </div>
-
-        </div>
-    </header>
-
-<div class="hero-image">
-
-    <img
-        src="images/banners/hero-1.jpeg"
-        alt="Latest collection"
-        class="hero-slide active"
-    >
-
-    <img
-        src="images/banners/hero-2.jpeg"
-        alt="New collection"
-        class="hero-slide"
-    >
-
-    <img
-        src="images/banners/hero-3.jpeg"
-        alt="Trending products"
-        class="hero-slide"
-    >
-
-</div>
-   
-        <!-- ==================== CATEGORIES ==================== -->
-
-        <section class="categories section">
-
+        <section class="section">
             <div class="container">
-
-                <div class="section-header">
-                    <p class="section-tag">EXPLORE</p>
-
-                    <h2>Shop by Category</h2>
-
-                    <p>
-                        Find what you're looking for quickly.
-                    </p>
-                </div>
-
-
-                <div class="category-grid">
-
-                    <a href="products.html" class="category-card">
-                        <div class="category-icon">👕</div>
-                        <h3>Fashion</h3>
-                        <p>120+ Products</p>
-                    </a>
-
-
-                    <a href="products.html" class="category-card">
-                        <div class="category-icon">👟</div>
-                        <h3>Shoes</h3>
-                        <p>80+ Products</p>
-                    </a>
-
-
-                    <a href="products.html" class="category-card">
-                        <div class="category-icon">🎧</div>
-                        <h3>Electronics</h3>
-                        <p>150+ Products</p>
-                    </a>
-
-
-                    <a href="products.html" class="category-card">
-                        <div class="category-icon">⌚</div>
-                        <h3>Accessories</h3>
-                        <p>90+ Products</p>
-                    </a>
-
-                </div>
-
+                <div class="section-head"><div><h2>Shop by category</h2><p>Find what you need, fast.</p></div></div>
+                <div class="cat-grid" id="cat-grid"></div>
             </div>
-
         </section>
 
-
-        <!-- ==================== FEATURED PRODUCTS ==================== -->
-
-        <section class="featured-products section">
-
+        <section class="section tint">
             <div class="container">
-
-                <div class="section-header">
-
-                    <p class="section-tag">OUR PICKS</p>
-
-                    <h2>Featured Products</h2>
-
-                    <p>
-                        Some of our most popular products.
-                    </p>
-
-                </div>
-
-
-                <div class="product-grid">
-
-                    <!-- Product 1 -->
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="product-badge">
-                                NEW
-                            </span>
-
-                            <img
-                                src="images/products/product-1.jpeg"
-                                alt="Product 1"
-                            >
-
-                            <button
-    class="wishlist-btn"
-    data-id="1"
-    type="button"
-    aria-label="Add to wishlist"
->
-    ♡
-</button>
-
-                        </div>
-
-                        <div class="product-info">
-
-                            <p class="product-category">
-                                Fashion
-                            </p>
-
-                            <h3>
-                                Classic Oversized T-Shirt
-                            </h3>
-
-                            <div class="product-rating">
-                                ★★★★★
-                                <span>(24)</span>
-                            </div>
-
-                            <div class="product-bottom">
-
-                                <p class="product-price">
-                                    NPR 1,499
-                                </p>
-
-                               <button
-    class="add-cart-btn"
-    data-id="1"
-    type="button"
->
-    + Cart
-</button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Product 2 -->
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="product-badge sale">
-                                SALE
-                            </span>
-
-                            <img
-                                src="images/products/product-2.jpeg"
-                                alt="Product 2"
-                            >
-
-                            <button
-    class="wishlist-btn"
-    data-id="2"
-    type="button"
-    aria-label="Add to wishlist"
->
-    ♡
-</button>
-
-                        </div>
-
-                        <div class="product-info">
-
-                            <p class="product-category">
-                                Shoes
-                            </p>
-
-                            <h3>
-                                Urban Street Sneakers
-                            </h3>
-
-                            <div class="product-rating">
-                                ★★★★★
-                                <span>(18)</span>
-                            </div>
-
-                            <div class="product-bottom">
-
-                                <p class="product-price">
-                                    NPR 3,999
-                                </p>
-
-                               <button
-    class="add-cart-btn"
-    data-id="2"
-    type="button"
->
-    + Cart
-</button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Product 3 -->
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="product-badge">
-                                NEW
-                            </span>
-
-                            <img
-                                src="images/products/product-3.jpeg"
-                                alt="Product 3"
-                            >
-
-                            <button
-    class="wishlist-btn"
-    data-id="3"
-    type="button"
-    aria-label="Add to wishlist"
->
-    ♡
-</button>
-
-                        </div>
-
-                        <div class="product-info">
-
-                            <p class="product-category">
-                                Electronics
-                            </p>
-
-                            <h3>
-                                Wireless Headphones
-                            </h3>
-
-                            <div class="product-rating">
-                                ★★★★★
-                                <span>(42)</span>
-                            </div>
-
-                            <div class="product-bottom">
-
-                                <p class="product-price">
-                                    NPR 4,999
-                                </p>
-
-                               <button
-    class="add-cart-btn"
-    data-id="3"
-    type="button"
->
-    + Cart
-</button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Product 4 -->
-                    <article class="product-card">
-
-                        <div class="product-image">
-
-                            <span class="product-badge sale">
-                                -20%
-                            </span>
-
-                            <img
-                                src="images/products/product-4.jpeg"
-                                alt="Product 4"
-                            >
-
-                            <button
-    class="wishlist-btn"
-    data-id="4"
-    type="button"
-    aria-label="Add to wishlist"
->
-    ♡
-</button>
-
-                        </div>
-
-                        <div class="product-info">
-
-                            <p class="product-category">
-                                Accessories
-                            </p>
-
-                            <h3>
-                                Minimal Smart Watch
-                            </h3>
-
-                            <div class="product-rating">
-                                ★★★★★
-                                <span>(31)</span>
-                            </div>
-
-                            <div class="product-bottom">
-
-                                <p class="product-price">
-                                    NPR 6,499
-                                </p>
-
-                                <button
-    class="add-cart-btn"
-    data-id="4"
-    type="button"
->
-    + Cart
-</button>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-
-                <div class="view-all">
-
-                    <a href="products.html" class="btn btn-outline">
-                        View All Products →
-                    </a>
-
-                </div>
-
+                <div class="section-head"><h2>Picked for you</h2><div class="tabs" id="home-tabs" role="tablist"></div></div>
+                <div class="product-grid" id="home-products"></div>
+                <div style="text-align:center;margin-top:36px"><a class="btn btn-outline btn-lg" href="products.html">View all products</a></div>
             </div>
-
         </section>
 
-
-        <!-- ==================== PROMO BANNER ==================== -->
-
-        <section class="promo section">
-
-            <div class="container promo-container">
-
-                <div class="promo-content">
-
-                    <p class="section-tag">
-                        LIMITED OFFER
-                    </p>
-
-                    <h2>
-                        Get up to
-                        <span>40% OFF</span>
-                    </h2>
-
-                    <p>
-                        Don't miss out on our biggest deals of the season.
-                    </p>
-
-                    <a href="products.html" class="btn btn-primary">
-                        Shop the Sale
-                    </a>
-
-                </div>
-
-            </div>
-
+        <section class="section promo" id="promo" style="padding-bottom:64px">
+            <div class="container"><div class="promo-card">
+                <div><h2 id="promo-title">Deals on selected items</h2><p>Limited-time prices on products you'll actually use. Grab them while stock lasts.</p></div>
+                <a class="btn btn-light btn-lg" href="products.html?sale=1">Shop the sale</a>
+            </div></div>
         </section>
-
-
-        <!-- ==================== WHY CHOOSE US ==================== -->
-
-        <section class="features section">
-
-            <div class="container">
-
-                <div class="section-header">
-
-                    <p class="section-tag">
-                        WHY US
-                    </p>
-
-                    <h2>
-                        Why Shop With Us?
-                    </h2>
-
-                </div>
-
-
-                <div class="features-grid">
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            🚚
-                        </div>
-
-                        <h3>
-                            Fast Delivery
-                        </h3>
-
-                        <p>
-                            Quick and reliable delivery
-                            right to your doorstep.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            🔒
-                        </div>
-
-                        <h3>
-                            Secure Payment
-                        </h3>
-
-                        <p>
-                            Your payments and personal
-                            information stay protected.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            ↩️
-                        </div>
-
-                        <h3>
-                            Easy Returns
-                        </h3>
-
-                        <p>
-                            Simple and hassle-free
-                            return process.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            💬
-                        </div>
-
-                        <h3>
-                            24/7 Support
-                        </h3>
-
-                        <p>
-                            We're always here whenever
-                            you need help.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
     </main>
+    <div id="site-footer"></div>
 
-
-    <!-- ==================== FOOTER ==================== -->
-
-    <footer class="footer">
-
-        <div class="container footer-container">
-
-            <div class="footer-brand">
-
-                <a href="index.html" class="logo">
-                    Shop<span>Ease</span>
-                </a>
-
-                <p>
-                    Your everyday online shopping destination.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>Quick Links</h3>
-
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>Customer Care</h3>
-
-                <a href="#">Shipping</a>
-                <a href="#">Returns</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms & Conditions</a>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>Follow Us</h3>
-
-                <div class="social-links">
-                    <a href="#">Instagram</a>
-                    <a href="#">Facebook</a>
-                    <a href="#">Twitter</a>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-bottom">
-
-            <p>
-                © 2026 ShopEase. All rights reserved.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-    <!-- JavaScript -->
-   <script src="js/products.js"></script>
-<script src="js/product.js"></script>
-<script src="js/wishlist.js"></script>
-<script src="js/app.js"></script>
-<script src="js/hero-slider.js"></script>
-<script src="js/chatbot.js"></script>
-
-
+    <script src="js/config.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>

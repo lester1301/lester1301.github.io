@@ -1,372 +1,140 @@
+require("dotenv").config({ quiet: true });
+
+const path = require("path");
+const fs = require("fs");
+const crypto = require("crypto");
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 
-const { GoogleGenAI } = require("@google/genai");
+const store = require("./lib/store");
+const { attachUser, requireRole, rateLimit, ok, fail } = require("./lib/util");
+const { seed } = require("./seed");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set("trust proxy", 1);
+app.disable("x-powered-by");
 
+/* =========================================================
+   MIDDLEWARE
+========================================================= */
 
-// =====================================================
-// GEMINI AI CLIENT
-// =====================================================
+// Set ALLOWED_ORIGINS="https://lester1301.github.io" to lock the API to your site.
+const allowed = (process.env.ALLOWED_ORIGINS || "")
+    .split(",")
+    .map((o) => o.trim())
+    .filter(Boolean);
 
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY
-});
-console.log(
-    "Gemini API key loaded:",
-    !!process.env.GEMINI_API_KEY,
-    "length:",
-    process.env.GEMINI_API_KEY?.length,
-    "last4:",
-    process.env.GEMINI_API_KEY?.slice(-4)
+app.use(
+    cors({
+        origin: allowed.length ? allowed : true
+    })
 );
 
-
-// =====================================================
-// MIDDLEWARE
-// =====================================================
-
-app.use(cors());
-app.use(express.json());
-
-
-// =====================================================
-// TEST ROUTE
-// =====================================================
-
-app.get("/", (req, res) => {
-
-    res.json({
-        success: true,
-        message: "ShopEase AI Server is running!"
+app.use((req, res, next) => {
+    res.set({
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin"
     });
-
+    next();
 });
 
-
-// =====================================================
-// AI CHAT ROUTE
-// =====================================================
-
-app.post("/api/chat", async (req, res) => {
-
-    try {
-
-        const userMessage = req.body.message;
-        const products = req.body.products || [];
-
-
-        // -------------------------------------------------
-        // CHECK MESSAGE
-        // -------------------------------------------------
-
-        if (!userMessage || !userMessage.trim()) {
-
-            return res.status(400).json({
-                success: false,
-                message: "Message is required."
-            });
-
-        }
-
-
-        // -------------------------------------------------
-        // PRODUCT DATA
-        // -------------------------------------------------
-
-        const productContext = products.length
-            ? JSON.stringify(products, null, 2)
-            : "No product data is currently available.";
-
-
-        // -------------------------------------------------
-        // SYSTEM INSTRUCTIONS
-        // -------------------------------------------------
-
-        const systemInstruction = `
-
-You are ShopEase AI, the intelligent shopping assistant
-for the ShopEase e-commerce website.
-
-You help users with:
-
-- Product recommendations
-- Product information
-- Product comparisons
-- Budget shopping
-- Categories
-- Shopping advice
-- General questions
-- Everyday questions
-
-You can also answer general knowledge questions.
-
-For general questions such as:
-
-- Nepal
-- trekking
-- travel
-- technology
-- general knowledge
-
-answer normally and helpfully.
-
-When the user asks about ShopEase products,
-use ONLY the product data provided below.
-
-
-=====================================================
-SHOP EASE PRODUCT DATA
-=====================================================
-
-${productContext}
-
-
-=====================================================
-IMPORTANT PRODUCT RULES
-=====================================================
-
-1. NEVER invent a ShopEase product.
-
-2. NEVER invent a ShopEase price.
-
-3. NEVER invent product features.
-
-4. Only recommend products that exist in the
-   provided product data.
-
-5. Use these product fields:
-
-   - id
-   - name
-   - category
-   - categoryName
-   - price
-   - rating
-   - reviews
-   - image
-   - badge
-
-6. If the user provides a budget such as:
-
-   "under NPR 2000"
-   "below 3000"
-   "2000 ke andar"
-   "2000 tak"
-
-   only recommend products whose actual price
-   is equal to or below that amount.
-
-7. If no product matches the budget, clearly say
-   that no matching product was found.
-
-8. When recommending products, consider:
-
-   - category
-   - price
-   - rating
-   - reviews
-   - badge
-   - user's request
-
-9. Recommend only the most relevant products.
-   Do not list the entire catalog.
-
-10. Use NPR when discussing ShopEase prices.
-
-11. Keep responses friendly, natural and concise.
-
-12. Never mention APIs, JavaScript, server,
-    productContext or internal code.
-
-13. Do not claim that you added something to cart.
-    The website frontend handles cart actions.
-
-14. If the user asks a general question unrelated
-    to ShopEase products, answer normally.
-
-
-=====================================================
-RESPONSE FORMAT
-=====================================================
-
-You MUST return valid JSON.
-
-For a normal/general question:
-
-{
-    "reply": "your answer here",
-    "productIds": []
-}
-
-For a product recommendation:
-
-{
-    "reply": "short helpful explanation",
-    "productIds": [1, 5, 8]
-}
-
-IMPORTANT:
-
-- productIds must contain ONLY IDs from the provided
-  ShopEase product data.
-- If no ShopEase products are relevant,
-  return an empty array.
-- Do not put product names inside productIds.
-- Do not use markdown code fences.
-- Return ONLY valid JSON.
-
-
-=====================================================
-PERSONALITY
-=====================================================
-
-Friendly
-Helpful
-Natural
-Professional
-Concise
-
-You are ShopEase AI.
-`;
-
-
-        // -------------------------------------------------
-        // CALL GEMINI
-        // -------------------------------------------------
-
-        const response = await ai.models.generateContent({
-
-            model: "gemini-3.6-flash",
-
-            contents: userMessage,
-
-            config: {
-
-                systemInstruction: systemInstruction
-
-            }
-
-        });
-
-
-        // -------------------------------------------------
-        // GET AI TEXT
-        // -------------------------------------------------
-
-        const rawText =
-            response.text ||
-            "";
-
-
-        // -------------------------------------------------
-        // PARSE AI JSON
-        // -------------------------------------------------
-
-        let aiData;
-
-
-        try {
-
-            aiData =
-                JSON.parse(rawText);
-
-        } catch (parseError) {
-
-            console.error(
-                "JSON PARSE ERROR:",
-                parseError
-            );
-
-            console.error(
-                "AI RAW RESPONSE:",
-                rawText
-            );
-
-
-            // Fallback if AI returns normal text
-
-            aiData = {
-
-                reply: rawText,
-
-                productIds: []
-
-            };
-
-        }
-
-
-        // -------------------------------------------------
-        // VALIDATE PRODUCT IDS
-        // -------------------------------------------------
-
-        const validProductIds =
-            Array.isArray(aiData.productIds)
-                ? aiData.productIds
-                    .map(Number)
-                    .filter(id =>
-                        products.some(
-                            product =>
-                                Number(product.id) === id
-                        )
-                    )
-                : [];
-
-
-        // -------------------------------------------------
-        // SEND RESPONSE
-        // -------------------------------------------------
-
-        res.json({
-
-            success: true,
-
-            reply:
-                aiData.reply ||
-                "Sorry, I couldn't generate a response.",
-
-            productIds:
-                validProductIds
-
-        });
-
-
-    } catch (error) {
-
-        console.error(
-            "AI ERROR:",
-            error
-        );
-
-
-        res.status(500).json({
-
-            success: false,
-
-            message: "AI response failed."
-
-        });
-
+const smallJson = express.json({ limit: "100kb" });
+// the upload route has its own, larger body limit
+app.use((req, res, next) => (req.path === "/api/upload" ? next() : smallJson(req, res, next)));
+app.use(attachUser);
+
+/* =========================================================
+   UPLOADS (product images)
+========================================================= */
+
+const UPLOAD_DIR = path.join(store.DATA_DIR, "uploads");
+app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "30d", immutable: true, dotfiles: "deny" }));
+
+const IMAGE_TYPES = {
+    "image/jpeg": { ext: "jpg", magic: [0xff, 0xd8, 0xff] },
+    "image/png": { ext: "png", magic: [0x89, 0x50, 0x4e, 0x47] },
+    "image/webp": { ext: "webp", magic: [0x52, 0x49, 0x46, 0x46] }
+};
+
+app.post(
+    "/api/upload",
+    requireRole("seller", "admin"),
+    rateLimit({ max: 40 }),
+    express.json({ limit: "3mb" }),
+    (req, res) => {
+        const match = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/=]+)$/.exec(String(req.body.data || ""));
+        if (!match) return fail(res, 400, "Please upload a JPG, PNG or WebP image.");
+
+        const type = IMAGE_TYPES[match[1]];
+        const buffer = Buffer.from(match[2], "base64");
+        if (buffer.length > 2 * 1024 * 1024) return fail(res, 400, "Image is too large (max 2 MB).");
+        if (!type.magic.every((byte, i) => buffer[i] === byte)) return fail(res, 400, "That file is not a valid image.");
+
+        const name = `${Date.now().toString(36)}-${crypto.randomBytes(5).toString("hex")}.${type.ext}`;
+        fs.writeFileSync(path.join(UPLOAD_DIR, name), buffer);
+        ok(res, { url: `/uploads/${name}` });
     }
+);
 
+/* =========================================================
+   API ROUTES
+========================================================= */
+
+app.get("/api/health", (req, res) => ok(res, { message: "ShopEase server is running.", time: new Date().toISOString() }));
+
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/account", require("./routes/account"));
+app.use("/api/seller", require("./routes/seller"));
+app.use("/api/admin", require("./routes/admin"));
+app.use("/api/chat", require("./routes/chat"));
+app.use("/api", require("./routes/public"));
+
+app.get("/", (req, res, next) => {
+    if (process.env.SERVE_FRONTEND === "1") return next();
+    ok(res, { message: "ShopEase server is running!" });
 });
 
+/* =========================================================
+   OPTIONAL: serve the website from this same server (local development)
+   Run with SERVE_FRONTEND=1 npm start  ->  http://localhost:3000
+========================================================= */
 
-// =====================================================
-// START SERVER
-// =====================================================
+if (process.env.SERVE_FRONTEND === "1") {
+    const root = path.join(__dirname, "..");
+    app.use((req, res, next) => {
+        if (/^\/server(\/|$)/i.test(req.path) || /\/\./.test(req.path)) return fail(res, 404, "Not found.");
+        next();
+    });
+    app.use(express.static(root, { dotfiles: "deny", extensions: ["html"] }));
+}
 
+/* =========================================================
+   ERRORS
+========================================================= */
 
+app.use("/api", (req, res) => fail(res, 404, "Not found."));
 
-    app.listen(PORT, "0.0.0.0", () => {
-
-    console.log(
-        `ShopEase AI Server running on port ${PORT}`
-    );
-
+app.use((err, req, res, next) => {
+    if (err && err.type === "entity.too.large") return fail(res, 413, "That request is too large.");
+    if (err && err.type === "entity.parse.failed") return fail(res, 400, "Invalid request body.");
+    console.error("[server] Unhandled error:", err);
+    fail(res, 500, "Something went wrong. Please try again.");
 });
+
+/* =========================================================
+   START
+========================================================= */
+
+seed()
+    .then(() => {
+        app.listen(PORT, "0.0.0.0", () => {
+            console.log(`ShopEase server running on port ${PORT}`);
+            console.log(`Data folder: ${store.DATA_DIR}`);
+        });
+    })
+    .catch((error) => {
+        console.error("Failed to start:", error);
+        process.exit(1);
+    });

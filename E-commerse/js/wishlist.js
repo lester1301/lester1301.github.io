@@ -1,182 +1,20 @@
-/* =========================
-   WISHLIST
-========================= */
+/* Wishlist page */
+(function () {
+    const { $, App, Catalog, Wishlist, productCard, icon, link } = SE;
 
-
-/* =========================
-   GET WISHLIST
-========================= */
-
-function getWishlist() {
-
-    return JSON.parse(
-        localStorage.getItem("wishlist")
-    ) || [];
-
-}
-
-
-/* =========================
-   SAVE WISHLIST
-========================= */
-
-function saveWishlist(wishlist) {
-
-    localStorage.setItem(
-        "wishlist",
-        JSON.stringify(wishlist)
-    );
-
-}
-
-
-/* =========================
-   TOGGLE WISHLIST
-========================= */
-
-function toggleWishlist(productId) {
-
-    const wishlist =
-        getWishlist();
-
-    const index =
-        wishlist.indexOf(productId);
-
-
-    if (index !== -1) {
-
-        wishlist.splice(index, 1);
-
+    function render() {
+        const ids = Wishlist.ids();
+        const items = ids.map((id) => Catalog.byId(id)).filter(Boolean);
+        $("#wish-count").textContent = items.length ? `${items.length} saved ${items.length === 1 ? "item" : "items"}` : "";
+        $("#wish-grid").innerHTML = items.length
+            ? items.map(productCard).join("")
+            : `<div class="empty" style="grid-column:1/-1">${icon("heart")}<h2>Your wishlist is empty</h2><p>Tap the heart on any product to save it here for later.</p><a class="btn btn-primary" href="${link("products.html")}">Browse products</a></div>`;
+        Wishlist.paint();
     }
 
-    else {
-
-        wishlist.push(productId);
-
-    }
-
-
-    saveWishlist(wishlist);
-
-    updateWishlistButtons();
-
-    updateWishlistCount();
-
-}
-
-
-/* =========================
-   UPDATE HEART BUTTONS
-========================= */
-
-function updateWishlistButtons() {
-
-    const wishlist =
-        getWishlist();
-
-
-    document
-        .querySelectorAll(".wishlist-btn")
-        .forEach(button => {
-
-            const productId =
-                Number(button.dataset.id);
-
-
-            if (wishlist.includes(productId)) {
-
-                button.classList.add("active");
-
-                button.innerHTML = "♥";
-
-                button.setAttribute(
-                    "aria-label",
-                    "Remove from wishlist"
-                );
-
-            }
-
-            else {
-
-                button.classList.remove("active");
-
-                button.innerHTML = "♡";
-
-                button.setAttribute(
-                    "aria-label",
-                    "Add to wishlist"
-                );
-
-            }
-
-        });
-
-}
-
-
-/* =========================
-   WISHLIST COUNT
-========================= */
-
-function updateWishlistCount() {
-
-    const wishlist =
-        getWishlist();
-
-
-    document
-        .querySelectorAll(".wishlist-count")
-        .forEach(count => {
-
-            count.textContent =
-                wishlist.length;
-
-        });
-
-}
-
-
-/* =========================
-   HEART CLICK
-========================= */
-
-document.addEventListener(
-    "click",
-    function (event) {
-
-        const button =
-            event.target.closest(".wishlist-btn");
-
-
-        if (!button) {
-            return;
-        }
-
-
-        event.preventDefault();
-
-
-        const productId =
-            Number(button.dataset.id);
-
-
-        toggleWishlist(productId);
-
-    }
-);
-
-
-/* =========================
-   INITIALIZE
-========================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        updateWishlistButtons();
-
-        updateWishlistCount();
-
-    }
-);
+    App.start(() => {
+        Catalog.subscribe(render);
+        // re-render when an item is removed from the list
+        window.addEventListener("wishlist:change", render);
+    });
+})();

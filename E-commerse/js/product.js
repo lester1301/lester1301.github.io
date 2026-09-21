@@ -1,520 +1,174 @@
-/* =========================
-   PRODUCT DETAILS PAGE
-========================= */
+/* Product detail page */
+(function () {
+    const { $, $$, esc, money, App, Catalog, Cart, Wishlist, Auth, Settings, api, toast, icon, stars, imgSrc, productCard, productBadge, link, fmtDate } = SE;
 
-const productDetails =
-    document.getElementById("product-details");
+    const id = Number(new URLSearchParams(location.search).get("id"));
+    let product = null, size = "", qty = 1, gallery = 0, tab = "description", reviews = [];
 
-const relatedProducts =
-    document.getElementById("related-products");
-
-
-/* =========================
-   GET PRODUCT ID FROM URL
-========================= */
-
-const urlParams =
-    new URLSearchParams(window.location.search);
-
-const productId =
-    Number(urlParams.get("id"));
-
-
-/* =========================
-   FIND PRODUCT
-========================= */
-
-const product =
-    products.find(item => item.id === productId);
-
-
-/* =========================
-   DISPLAY PRODUCT
-========================= */
-
-function displayProduct(product) {
-
-    if (!product) {
-
-        productDetails.innerHTML = `
-            <div class="empty-products">
-                <div class="empty-icon">😕</div>
-
-                <h2>
-                    Product Not Found
-                </h2>
-
-                <p>
-                    The product you're looking for
-                    doesn't exist.
-                </p>
-
-                <br>
-
-                <a
-                    href="products.html"
-                    class="btn btn-primary"
-                >
-                    Back to Products
-                </a>
-            </div>
-        `;
-
-        return;
+    function notFound() {
+        $("#pd-root").innerHTML = `<div class="empty">${icon("search")}<h2>Product not found</h2><p>This product may have been removed or is no longer available.</p><a class="btn btn-primary" href="${link("products.html")}">Browse products</a></div>`;
+        $("#pd-extra").innerHTML = "";
     }
 
+    function stockNote(p) {
+        if (p.stock <= 0) return `<div class="stock-note out">${icon("x", "icon icon-sm")}Out of stock</div>`;
+        if (p.stock <= 5) return `<div class="stock-note low">${icon("clock", "icon icon-sm")}Only ${p.stock} left, order soon</div>`;
+        return `<div class="stock-note ok">${icon("check", "icon icon-sm")}In stock</div>`;
+    }
 
-    productDetails.innerHTML = `
+    function render() {
+        const p = product;
+        const s = Settings.get();
+        const imgs = p.images && p.images.length ? p.images : [p.image];
+        const on = Wishlist.has(p.id);
+        const discount = p.comparePrice > p.price ? Math.round((1 - p.price / p.comparePrice) * 100) : 0;
+        const max = Math.max(1, Math.min(10, p.stock));
+        qty = Math.min(qty, max);
 
-        <!-- Product Image -->
+        document.title = `${p.name} | ${s.storeName}`;
+        $("#crumb-cat").innerHTML = `<a href="${link("products.html")}?category=${encodeURIComponent(p.category)}">${esc(p.categoryName)}</a>`;
+        $("#crumb-name").textContent = p.name;
 
-        <div class="details-image">
-
-            ${
-                product.badge
-                    ? `
-                        <span class="product-badge ${
-                            product.badge === "SALE" ||
-                            product.badge.includes("%")
-                                ? "sale"
-                                : ""
-                        }">
-                            ${product.badge}
-                        </span>
-                    `
-                    : ""
-            }
-
-            <img
-                src="${product.image}"
-                alt="${product.name}"
-            >
-
+        $("#pd-root").innerHTML = `
+        <div class="gallery">
+            <div class="gallery-thumbs">${imgs.map((u, i) => `<button type="button" data-thumb="${i}" class="${i === gallery ? "is-active" : ""}" aria-label="Image ${i + 1}"><img src="${esc(imgSrc(u))}" alt=""></button>`).join("")}</div>
+            <div class="gallery-main"><img id="main-img" src="${esc(imgSrc(imgs[gallery]))}" alt="${esc(p.name)}"><span class="pcard-badges" style="left:14px;top:14px">${productBadge(p)}</span></div>
         </div>
-
-
-        <!-- Product Information -->
-
-        <div class="details-content">
-
-            <p class="details-category">
-                ${product.categoryName}
-            </p>
-
-
-            <h1>
-                ${product.name}
-            </h1>
-
-
-            <div class="details-rating">
-
-                <span class="details-stars">
-                    ${"★".repeat(Math.floor(product.rating))}
-                </span>
-
-                <span>
-                    ${product.rating} (${product.reviews} reviews)
-                </span>
-
+        <div class="pd-info">
+            <div><span class="muted">${esc(p.categoryName)}</span><h1>${esc(p.name)}</h1></div>
+            <div class="pd-meta">
+                ${p.reviews > 0 ? `<a href="#reviews" data-goto-reviews style="display:inline-flex;align-items:center;gap:8px">${stars(p.rating)}<span>${p.rating.toFixed(1)} (${p.reviews} ${p.reviews === 1 ? "review" : "reviews"})</span></a>` : `<a href="#reviews" data-goto-reviews class="link">Be the first to review</a>`}
+                <span>Sold by ${esc(p.seller || s.storeName)}</span>
             </div>
-
-
-            <p class="details-price">
-                NPR ${product.price.toLocaleString()}
-            </p>
-
-
-            <p class="details-description">
-                Experience quality, comfort and style with
-                our ${product.name}. Carefully selected for
-                everyday use, this product combines modern
-                design with reliable performance.
-            </p>
-
-
-            <div class="details-divider"></div>
-
-
-            <!-- Quantity -->
-
-            <div class="quantity-wrapper">
-
-                <label>
-                    Quantity
-                </label>
-
-                <div class="quantity-control">
-
-                    <button
-                        id="quantity-minus"
-                        type="button"
-                    >
-                        −
-                    </button>
-
-                    <span id="quantity">
-                        1
-                    </span>
-
-                    <button
-                        id="quantity-plus"
-                        type="button"
-                    >
-                        +
-                    </button>
-
-                </div>
-
+            <div class="pd-price"><b>${money(p.price)}</b>${discount ? `<s>${money(p.comparePrice)}</s><span class="tag tag-sale">Save ${discount}%</span>` : ""}</div>
+            <p class="pd-desc">${esc((p.description || "").split("\n")[0])}</p>
+            <div class="divider"></div>
+            ${p.sizes && p.sizes.length ? `<div><div class="opt-label"><span>Size</span><span id="size-msg" class="text-sale" style="font-weight:600"></span></div><div class="size-list">${p.sizes.map((z) => `<button type="button" data-size="${esc(z)}" class="${z === size ? "is-active" : ""}">${esc(z)}</button>`).join("")}</div></div>` : ""}
+            ${stockNote(p)}
+            <div class="pd-actions">
+                <div class="qty" ${p.stock <= 0 ? 'hidden' : ""}><button type="button" data-qty="-1" aria-label="Decrease quantity">${icon("minus", "icon icon-sm")}</button><span id="qty">${qty}</span><button type="button" data-qty="1" aria-label="Increase quantity">${icon("plus", "icon icon-sm")}</button></div>
+                <button class="btn btn-primary btn-lg" id="add-cart" type="button" ${p.stock <= 0 ? "disabled" : ""}>${p.stock <= 0 ? "Sold out" : "Add to cart"}</button>
+                <button class="wish-inline ${on ? "is-on" : ""}" data-wish="${p.id}" type="button" aria-label="Save to wishlist">${icon("heart")}</button>
             </div>
-
-
-            <!-- Actions -->
-
-            <div class="details-actions">
-
-                <button
-                    class="details-add-cart"
-                    id="details-add-cart"
-                    type="button"
-                >
-                    🛒 Add to Cart
-                </button>
-
-                <button
-                    class="details-wishlist"
-                    type="button"
-                    aria-label="Add to wishlist"
-                >
-                    ♡
-                </button>
-
+            ${p.stock > 0 ? '<button class="btn btn-dark btn-block" id="buy-now" type="button">Buy it now</button>' : ""}
+            <div class="perks">
+                <div>${icon("truck")}<span>${s.freeShippingThreshold > 0 ? `Delivery ${money(s.shippingFee)}, free above ${money(s.freeShippingThreshold)}` : `Delivery ${money(s.shippingFee)}`}</span></div>
+                <div>${icon("wallet")}<span>${[s.codEnabled ? "Cash on delivery" : "", s.onlineEnabled ? "eSewa, Khalti or bank transfer" : ""].filter(Boolean).join(" · ")}</span></div>
+                <div>${icon("refresh")}<span>7-day easy returns</span></div>
             </div>
-
-        </div>
-
-    `;
-
-
-    setupQuantity();
-
-    setupAddToCart();
-
-}
-
-
-/* =========================
-   QUANTITY
-========================= */
-
-function setupQuantity() {
-
-    const quantityElement =
-        document.getElementById("quantity");
-
-    const minusButton =
-        document.getElementById("quantity-minus");
-
-    const plusButton =
-        document.getElementById("quantity-plus");
-
-
-    let quantity = 1;
-
-
-    plusButton.addEventListener(
-        "click",
-        () => {
-
-            if (quantity < 10) {
-
-                quantity++;
-
-                quantityElement.textContent =
-                    quantity;
-            }
-
-        }
-    );
-
-
-    minusButton.addEventListener(
-        "click",
-        () => {
-
-            if (quantity > 1) {
-
-                quantity--;
-
-                quantityElement.textContent =
-                    quantity;
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================
-   ADD TO CART
-========================= */
-
-function setupAddToCart() {
-
-    const addButton =
-        document.getElementById("details-add-cart");
-
-    addButton.addEventListener(
-        "click",
-        () => {
-
-            const quantity =
-                Number(
-                    document.getElementById("quantity")
-                        .textContent
-                );
-
-
-            addToCart(product, quantity);
-
-        }
-    );
-
-}
-
-
-/* =========================
-   CART FUNCTION
-========================= */
-
-function addToCart(product, quantity) {
-
-    let cart =
-        JSON.parse(
-            localStorage.getItem("cart")
-        ) || [];
-
-
-    const existingProduct =
-        cart.find(
-            item => item.id === product.id
-        );
-
-
-    if (existingProduct) {
-
-        existingProduct.quantity += quantity;
-
-    } else {
-
-        cart.push({
-
-            id: product.id,
-
-            name: product.name,
-
-            price: product.price,
-
-            image: product.image,
-
-            quantity: quantity
-
-        });
-
+        </div>`;
+        Wishlist.paint();
+        renderTabs();
+        renderRelated();
     }
 
+    function renderTabs() {
+        const p = product;
+        const feats = (p.features || []).length ? `<ul class="dots" style="margin-top:18px">${p.features.map((f) => `<li>${icon("check")}<span>${esc(f)}</span></li>`).join("")}</ul>` : "";
+        const desc = `<p style="white-space:pre-line">${esc(p.description)}</p>${feats}`;
 
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
+        const list = reviews.length
+            ? reviews.map((r) => `<div class="review"><div class="review-head">${stars(r.rating)}<strong style="color:var(--ink)">${esc(r.name)}</strong>${r.verified ? '<span class="pill pill-ok">Verified purchase</span>' : ""}<span class="muted" style="font-size:13px">${fmtDate(r.createdAt)}</span></div>${r.comment ? `<p>${esc(r.comment)}</p>` : ""}</div>`).join("")
+            : '<p class="muted">No reviews yet. Bought this? Tell others what you think.</p>';
 
+        const form = Auth.isLoggedIn()
+            ? `<form class="review-form" id="review-form"><strong style="color:var(--ink)">Write a review</strong>
+                <div class="star-input" id="star-input">${[1, 2, 3, 4, 5].map((n) => `<button type="button" data-star="${n}" aria-label="${n} stars">${icon("star")}</button>`).join("")}</div>
+                <textarea class="textarea" id="review-text" maxlength="1000" placeholder="Share your experience (optional)"></textarea>
+                <div id="review-err" class="field-error"></div>
+                <button class="btn btn-dark" type="submit" style="justify-self:start">Submit review</button></form>`
+            : `<div class="review-form"><span>Please <a class="link" href="${link("login.html")}?next=${encodeURIComponent("product.html?id=" + id)}">sign in</a> to write a review.</span></div>`;
 
-    updateCartCount();
-
-
-    /* Button feedback */
-
-    const addButton =
-        document.getElementById("details-add-cart");
-
-    addButton.textContent =
-        "✓ Added to Cart";
-
-    addButton.style.background =
-        "#25a56a";
-
-
-    setTimeout(() => {
-
-        addButton.textContent =
-            "🛒 Add to Cart";
-
-        addButton.style.background =
-            "";
-
-    }, 1500);
-
-}
-
-
-/* =========================
-   CART COUNT
-========================= */
-
-function updateCartCount() {
-
-    const cart =
-        JSON.parse(
-            localStorage.getItem("cart")
-        ) || [];
-
-
-    const totalItems =
-        cart.reduce(
-            (total, item) =>
-                total + item.quantity,
-            0
-        );
-
-
-    document
-        .querySelectorAll(".cart-count")
-        .forEach(count => {
-
-            count.textContent =
-                totalItems;
-
-        });
-
-}
-
-
-/* =========================
-   RELATED PRODUCTS
-========================= */
-
-function displayRelatedProducts() {
-
-    if (!product || !relatedProducts) {
-        return;
+        $("#pd-tabs").innerHTML = `
+            <div class="tab-list" role="tablist"><button type="button" data-tab="description" class="${tab === "description" ? "is-active" : ""}">Description</button>
+            <button type="button" data-tab="reviews" id="reviews" class="${tab === "reviews" ? "is-active" : ""}">Reviews (${reviews.length})</button></div>
+            <div class="tab-panel">${tab === "description" ? desc : list + form}</div>`;
+        rating = 0;
     }
 
+    function renderRelated() {
+        const p = product;
+        let items = Catalog.list.filter((x) => x.id !== p.id && x.category === p.category);
+        if (items.length < 4) items = items.concat(Catalog.list.filter((x) => x.id !== p.id && x.category !== p.category));
+        items = items.slice(0, 4);
+        $("#pd-extra").innerHTML = items.length ? `<section class="section tint"><div class="container"><div class="section-head"><h2>You may also like</h2></div><div class="product-grid">${items.map(productCard).join("")}</div></div></section>` : "";
+        Wishlist.paint();
+    }
 
-    const related =
-        products
-            .filter(item =>
-                item.category === product.category &&
-                item.id !== product.id
-            )
-            .slice(0, 4);
+    let rating = 0;
 
+    function bind() {
+        document.addEventListener("click", async (e) => {
+            if (!product) return;
+            const t = e.target;
+            const thumb = t.closest("[data-thumb]");
+            if (thumb) { gallery = Number(thumb.dataset.thumb); render(); return; }
+            const sz = t.closest("[data-size]");
+            if (sz) { size = sz.dataset.size; $$("[data-size]").forEach((b) => b.classList.toggle("is-active", b.dataset.size === size)); $("#size-msg").textContent = ""; return; }
+            const q = t.closest("[data-qty]");
+            if (q) {
+                const max = Math.max(1, Math.min(10, product.stock));
+                qty = Math.max(1, Math.min(max, qty + Number(q.dataset.qty)));
+                $("#qty").textContent = qty;
+                return;
+            }
+            if (t.closest("[data-goto-reviews]")) { e.preventDefault(); tab = "reviews"; renderTabs(); $("#pd-tabs").scrollIntoView({ behavior: "smooth" }); return; }
+            const tb = t.closest("[data-tab]");
+            if (tb && tb.closest("#pd-tabs")) { tab = tb.dataset.tab; renderTabs(); return; }
+            const star = t.closest("[data-star]");
+            if (star) { rating = Number(star.dataset.star); $$("#star-input button").forEach((b) => b.classList.toggle("is-on", Number(b.dataset.star) <= rating)); return; }
 
-    relatedProducts.innerHTML = "";
-
-
-    related.forEach(item => {
-
-        const card =
-            document.createElement("article");
-
-        card.className =
-            "product-card";
-
-
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                ${
-                    item.badge
-                        ? `
-                            <span class="product-badge ${
-                                item.badge === "SALE" ||
-                                item.badge.includes("%")
-                                    ? "sale"
-                                    : ""
-                            }">
-                                ${item.badge}
-                            </span>
-                        `
-                        : ""
+            if (t.closest("#add-cart") || t.closest("#buy-now")) {
+                if (product.sizes.length && !size) {
+                    $("#size-msg").textContent = "Please choose a size";
+                    toast("Please choose a size first", "error");
+                    return;
                 }
+                const res = Cart.add(product.id, qty, size);
+                if (!res.ok) return toast(res.message, "error");
+                if (t.closest("#buy-now")) location.href = link("checkout.html");
+                else toast("Added to your cart", "ok", { href: link("cart.html"), text: "View cart" });
+            }
+        });
 
-                <img
-                    src="${item.image}"
-                    alt="${item.name}"
-                    loading="lazy"
-                >
+        document.addEventListener("submit", async (e) => {
+            if (e.target.id !== "review-form") return;
+            e.preventDefault();
+            if (!rating) { $("#review-err").textContent = "Please choose a star rating."; return; }
+            try {
+                await api(`/api/products/${product.id}/reviews`, { method: "POST", body: { rating, comment: $("#review-text").value } });
+                toast("Thanks for your review!");
+                await loadReviews();
+                Catalog.load();
+            } catch (err) {
+                $("#review-err").textContent = err.message;
+            }
+        });
+    }
 
-                <button
-                    class="wishlist-btn"
-                    type="button"
-                >
-                    ♡
-                </button>
+    async function loadReviews() {
+        try {
+            reviews = (await api(`/api/products/${id}/reviews`, { auth: false })).reviews;
+            if (product) renderTabs();
+        } catch (e) { /* keep empty */ }
+    }
 
-            </div>
+    function refresh(fresh) {
+        const found = Catalog.byId(id);
+        if (found) { product = found; render(); }
+        else if (fresh) notFound();
+    }
 
-
-            <div class="product-info">
-
-                <p class="product-category">
-                    ${item.categoryName}
-                </p>
-
-                <h3>
-                    ${item.name}
-                </h3>
-
-                <div class="product-rating">
-
-                    ${"★".repeat(Math.floor(item.rating))}
-
-                    <span>
-                        (${item.reviews})
-                    </span>
-
-                </div>
-
-                <div class="product-bottom">
-
-                    <p class="product-price">
-                        NPR ${item.price.toLocaleString()}
-                    </p>
-
-                    <a
-                        href="product.html?id=${item.id}"
-                        class="add-cart-btn"
-                    >
-                        View
-                    </a>
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        relatedProducts.appendChild(card);
-
+    App.start(() => {
+        if (!id) return notFound();
+        bind();
+        $("#pd-root").innerHTML = '<div class="skeleton" style="aspect-ratio:1;grid-column:1/-1;max-width:520px"></div>';
+        Catalog.subscribe((list, fresh) => {
+            // do not rebuild the page while the visitor is mid-interaction with fresh data of the same product
+            if (product && fresh && JSON.stringify(Catalog.byId(id)) === JSON.stringify(product)) return;
+            refresh(fresh);
+        });
+        loadReviews();
+        window.addEventListener("wishlist:change", Wishlist.paint);
     });
-
-}
-
-
-/* =========================
-   INITIALIZE PAGE
-========================= */
-
-if (productDetails) {
-
-    displayProduct(product);
-
-    displayRelatedProducts();
-
-}
-
-updateCartCount();
+})();

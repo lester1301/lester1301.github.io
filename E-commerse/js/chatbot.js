@@ -1,840 +1,117 @@
-/* =========================================================
-   SHOPEASE AI CHATBOT
-========================================================= */
-
-
-/* =========================================================
-   CHATBOT BUTTON
-========================================================= */
-
-const chatbotButton = document.createElement("button");
-
-chatbotButton.className = "chatbot-button";
-chatbotButton.type = "button";
-
-chatbotButton.setAttribute(
-    "aria-label",
-    "Open ShopEase AI Assistant"
-);
-
-chatbotButton.innerHTML = "💬";
-
-document.body.appendChild(chatbotButton);
-
-
-/* =========================================================
-   CHATBOT WINDOW
-========================================================= */
-
-const chatbotWindow = document.createElement("div");
-
-chatbotWindow.className = "chatbot-window";
-
-chatbotWindow.innerHTML = `
-
-    <div class="chatbot-header">
-
-        <div class="chatbot-title">
-
-            <div class="chatbot-avatar">
-                🤖
-            </div>
-
-            <div>
-
-                <h3>ShopEase AI</h3>
-
-                <span>
-                    Shopping Assistant
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <button
-            class="chatbot-close"
-            type="button"
-            aria-label="Close chatbot"
-        >
-            ×
-        </button>
-
-    </div>
-
-
-    <div class="chatbot-messages">
-
-        <div class="chat-message bot-message">
-
-            <div class="message-avatar">
-                🤖
-            </div>
-
-            <div class="message-content">
-
-                <p>
-                    Hi! 👋 I'm ShopEase AI.
-                </p>
-
-                <p>
-                    I can help you find products,
-                    compare prices and answer
-                    shopping questions.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="chatbot-input-area">
-
-        <input
-            type="text"
-            class="chatbot-input"
-            placeholder="Ask me anything..."
-            autocomplete="off"
-        >
-
-        <button
-            class="chatbot-send"
-            type="button"
-            aria-label="Send message"
-        >
-            ➤
-        </button>
-
-    </div>
-
-`;
-
-document.body.appendChild(chatbotWindow);
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const closeChatbot =
-    chatbotWindow.querySelector(".chatbot-close");
-
-const chatbotInput =
-    chatbotWindow.querySelector(".chatbot-input");
-
-const chatbotSend =
-    chatbotWindow.querySelector(".chatbot-send");
-
-const chatbotMessages =
-    chatbotWindow.querySelector(".chatbot-messages");
-
-
-/* =========================================================
-   OPEN CHATBOT
-========================================================= */
-
-chatbotButton.addEventListener("click", () => {
-
-    chatbotWindow.classList.add("active");
-
-    chatbotInput.focus();
-
-});
-
-
-/* =========================================================
-   CLOSE CHATBOT
-========================================================= */
-
-closeChatbot.addEventListener("click", () => {
-
-    chatbotWindow.classList.remove("active");
-
-});
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(text) {
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   GET PRODUCTS
-========================================================= */
-
-function getProducts() {
-
-    if (
-        typeof products === "undefined" ||
-        !Array.isArray(products)
-    ) {
-
-        return [];
-
-    }
-
-    return products;
-
-}
-
-
-/* =========================================================
-   ADD NORMAL MESSAGE
-========================================================= */
-
-function addMessage(message, sender) {
-
-    const messageWrapper =
-        document.createElement("div");
-
-    messageWrapper.className =
-        `chat-message ${sender}-message`;
-
-
-    const avatar =
-        sender === "bot"
-            ? "🤖"
-            : "👤";
-
-
-    messageWrapper.innerHTML = `
-
-        <div class="message-avatar">
-            ${avatar}
-        </div>
-
-        <div class="message-content">
-
-            <p>
-                ${escapeHTML(message)}
-            </p>
-
-        </div>
-
-    `;
-
-
-    chatbotMessages.appendChild(
-        messageWrapper
-    );
-
-
-    chatbotMessages.scrollTop =
-        chatbotMessages.scrollHeight;
-
-}
-
-
-/* =========================================================
-   ADD AI RESPONSE
-========================================================= */
-
-function addAIResponse(reply, productIds) {
-
-    const messageWrapper =
-        document.createElement("div");
-
-    messageWrapper.className =
-        "chat-message bot-message";
-
-
-    /* -----------------------------------------------------
-       FIND PRODUCTS FROM PRODUCT IDS
-    ----------------------------------------------------- */
-
-    const allProducts =
-        getProducts();
-
-
-    const productsFound =
-        Array.isArray(productIds)
-            ? productIds
-                .map(id =>
-                    allProducts.find(
-                        product =>
-                            Number(product.id) === Number(id)
-                    )
-                )
-                .filter(Boolean)
-            : [];
-
-
-    /* -----------------------------------------------------
-       CREATE PRODUCT CARDS
-    ----------------------------------------------------- */
-
-    let productHTML = "";
-
-
-    productsFound.forEach(product => {
-
-        productHTML += `
-
-            <div class="chat-product-card">
-
-                <img
-                    src="${escapeHTML(product.image)}"
-                    alt="${escapeHTML(product.name)}"
-                >
-
-
-                <div class="chat-product-info">
-
-                    <strong>
-                        ${escapeHTML(product.name)}
-                    </strong>
-
-
-                    <span>
-                        ${escapeHTML(
-                            product.categoryName || ""
-                        )}
-                    </span>
-
-
-                    <div class="chat-product-rating">
-
-                        ${"★".repeat(
-                            Math.floor(
-                                Number(product.rating || 0)
-                            )
-                        )}
-
-                        <small>
-                            (${Number(
-                                product.reviews || 0
-                            )})
-                        </small>
-
-                    </div>
-
-
-                    <b>
-                        NPR ${Number(
-                            product.price
-                        ).toLocaleString()}
-                    </b>
-
-
-                    <div class="chat-product-actions">
-
-                        <a
-                            href="product.html?id=${product.id}"
-                            class="chat-product-view"
-                        >
-                            View Product
-                        </a>
-
-
-                        <button
-                            type="button"
-                            class="chat-product-cart"
-                            data-product-id="${product.id}"
-                        >
-                            Add to Cart
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        `;
-
-    });
-
-
-    /* -----------------------------------------------------
-       MESSAGE HTML
-    ----------------------------------------------------- */
-
-    messageWrapper.innerHTML = `
-
-        <div class="message-avatar">
-            🤖
-        </div>
-
-
-        <div class="message-content chat-results-content">
-
-            <p>
-                ${escapeHTML(reply)}
-            </p>
-
-
-            ${
-                productHTML
-                    ? `
-                        <div class="chat-products-list">
-                            ${productHTML}
-                        </div>
-                    `
-                    : ""
+/* AI shopping assistant widget (backend: POST /api/chat) */
+(function () {
+    const { $, esc, money, API, Catalog, Cart, Settings, icon, imgSrc, link, toast, readJSON, writeJSON } = SE;
+    const KEY = "se_chat";
+    let history = readJSON(KEY, []);   // [{ role: "user"|"model", text, ids? }]
+    let busy = false;
+
+    function build() {
+        const wrap = document.createElement("div");
+        wrap.innerHTML = `
+            <button class="chat-fab" id="chat-fab" type="button" aria-label="Open shopping assistant">${icon("chat")}</button>
+            <section class="chat-win" id="chat-win" role="dialog" aria-label="Shopping assistant">
+                <div class="chat-head"><div><h3>${esc(Settings.get().storeName)} assistant</h3><small>Ask about products, prices or delivery</small></div>
+                    <button class="icon-btn" id="chat-close" type="button" style="color:#fff" aria-label="Close">${icon("x")}</button></div>
+                <div class="chat-msgs" id="chat-msgs" aria-live="polite"></div>
+                <form class="chat-input" id="chat-form"><input id="chat-input" maxlength="500" autocomplete="off" placeholder="Type your question"><button type="submit" aria-label="Send" id="chat-send">${icon("send", "icon icon-sm")}</button></form>
+            </section>`;
+        document.body.appendChild(wrap);
+
+        $("#chat-fab").addEventListener("click", toggle);
+        $("#chat-close").addEventListener("click", toggle);
+        $("#chat-form").addEventListener("submit", (e) => { e.preventDefault(); send($("#chat-input").value); });
+        $("#chat-msgs").addEventListener("click", (e) => {
+            const chip = e.target.closest("[data-chip]");
+            if (chip) return send(chip.dataset.chip);
+            const add = e.target.closest("[data-chat-add]");
+            if (add) {
+                const r = Cart.add(Number(add.dataset.chatAdd), 1, "");
+                toast(r.ok ? "Added to your cart" : r.message, r.ok ? "ok" : "error", r.ok ? { href: link("cart.html"), text: "View cart" } : null);
             }
+        });
 
-        </div>
-
-    `;
-
-
-    chatbotMessages.appendChild(
-        messageWrapper
-    );
-
-
-    chatbotMessages.scrollTop =
-        chatbotMessages.scrollHeight;
-
-}
-
-
-/* =========================================================
-   GET AI RESPONSE
-========================================================= */
-
-async function getAIResponse(message) {
-
-    try {
-
-        const response =
-            await fetch(
-                "https://lester1301-github-io.onrender.com/api/chat",
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        message: message,
-
-                        products: getProducts()
-
-                    })
-
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                `Server returned ${response.status}`
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        if (!data.success) {
-
-            throw new Error(
-                data.message ||
-                "AI response failed."
-            );
-
-        }
-
-
-        return {
-
-            reply:
-                data.reply ||
-                "Sorry, I couldn't generate a response.",
-
-            productIds:
-                Array.isArray(data.productIds)
-                    ? data.productIds
-                    : []
-
-        };
-
-
-    } catch (error) {
-
-        console.error(
-            "AI CHAT ERROR:",
-            error
-        );
-
-
-        return {
-
-            reply:
-                "Sorry 😕 I'm having trouble connecting to my AI right now.",
-
-            productIds: []
-
-        };
-
+        if (history.length === 0) welcome();
+        else history.forEach((m) => draw(m.role === "user" ? "user" : "bot", m.text, m.ids));
     }
 
-}
-
-
-/* =========================================================
-   SEND MESSAGE
-========================================================= */
-
-async function sendMessage() {
-
-    const message =
-        chatbotInput.value.trim();
-
-
-    /* -----------------------------------------------------
-       EMPTY MESSAGE
-    ----------------------------------------------------- */
-
-    if (!message) {
-
-        return;
-
+    function toggle() {
+        const win = $("#chat-win");
+        win.classList.toggle("is-open");
+        if (win.classList.contains("is-open")) {
+            const box = $("#chat-msgs");
+            box.scrollTop = box.scrollHeight;
+            $("#chat-input").focus();
+        }
     }
 
-
-    /* -----------------------------------------------------
-       SHOW USER MESSAGE
-    ----------------------------------------------------- */
-
-    addMessage(
-        message,
-        "user"
-    );
-
-
-    /* -----------------------------------------------------
-       CLEAR INPUT
-    ----------------------------------------------------- */
-
-    chatbotInput.value = "";
-
-
-    /* -----------------------------------------------------
-       DISABLE SEND BUTTON
-    ----------------------------------------------------- */
-
-    chatbotSend.disabled = true;
-
-
-    /* -----------------------------------------------------
-       SHOW THINKING MESSAGE
-    ----------------------------------------------------- */
-
-    const thinkingMessage =
-        document.createElement("div");
-
-    thinkingMessage.className =
-        "chat-message bot-message";
-
-
-    thinkingMessage.innerHTML = `
-
-        <div class="message-avatar">
-            🤖
-        </div>
-
-        <div class="message-content">
-
-            <p>
-                Thinking... 🤔
-            </p>
-
-        </div>
-
-    `;
-
-
-    chatbotMessages.appendChild(
-        thinkingMessage
-    );
-
-
-    chatbotMessages.scrollTop =
-        chatbotMessages.scrollHeight;
-
-
-    try {
-
-        /* -------------------------------------------------
-           GET AI RESPONSE
-        ------------------------------------------------- */
-
-        const aiResponse =
-            await getAIResponse(message);
-
-
-        /* -------------------------------------------------
-           REMOVE THINKING MESSAGE
-        ------------------------------------------------- */
-
-        thinkingMessage.remove();
-
-
-        /* -------------------------------------------------
-           SHOW AI RESPONSE + PRODUCTS
-        ------------------------------------------------- */
-
-        addAIResponse(
-            aiResponse.reply,
-            aiResponse.productIds
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "SEND MESSAGE ERROR:",
-            error
-        );
-
-
-        thinkingMessage.remove();
-
-
-        addMessage(
-            "Sorry 😕 Something went wrong while connecting to the AI.",
-            "bot"
-        );
-
+    function welcome() {
+        draw("bot", "Hi! I can help you find products, compare options or check delivery details. What are you looking for?");
+        const chips = document.createElement("div");
+        chips.className = "chat-chips";
+        chips.innerHTML = ["Show me best sellers", "Something under NPR 2,000", "How much is delivery?", "Suggest a gift"].map((c) => `<button type="button" data-chip="${esc(c)}">${esc(c)}</button>`).join("");
+        $("#chat-msgs").appendChild(chips);
     }
 
+    function draw(who, text, ids) {
+        const box = $("#chat-msgs");
+        const m = document.createElement("div");
+        m.className = "msg " + who;
+        m.textContent = text;
+        box.appendChild(m);
 
-    /* -----------------------------------------------------
-       ENABLE SEND BUTTON
-    ----------------------------------------------------- */
-
-    chatbotSend.disabled = false;
-
-    chatbotInput.focus();
-
-}
-
-
-/* =========================================================
-   SEND BUTTON
-========================================================= */
-
-chatbotSend.addEventListener(
-    "click",
-    sendMessage
-);
-
-
-/* =========================================================
-   ENTER KEY
-========================================================= */
-
-chatbotInput.addEventListener(
-    "keydown",
-    event => {
-
-        if (event.key === "Enter") {
-
-            event.preventDefault();
-
-            sendMessage();
-
+        const products = (ids || []).map((id) => Catalog.byId(id)).filter(Boolean);
+        if (products.length) {
+            const cards = document.createElement("div");
+            cards.className = "chat-cards";
+            cards.innerHTML = products.map((p) => `<div class="chat-card"><img src="${esc(imgSrc(p.image))}" alt="">
+                <div><strong>${esc(p.name)}</strong><div class="price"><b>${money(p.price)}</b>${p.comparePrice > p.price ? `<s>${money(p.comparePrice)}</s>` : ""}</div>
+                <div class="row"><a href="${link("product.html")}?id=${p.id}">View</a>${p.sizes && p.sizes.length ? "" : `<button type="button" data-chat-add="${p.id}" ${p.stock <= 0 ? "disabled" : ""}>Add to cart</button>`}</div></div></div>`).join("");
+            box.appendChild(cards);
         }
-
+        box.scrollTop = box.scrollHeight;
+        return m;
     }
-);
 
+    async function send(text) {
+        text = String(text || "").trim();
+        if (!text || busy) return;
+        busy = true;
+        $("#chat-input").value = "";
+        $("#chat-send").disabled = true;
+        const chips = $(".chat-chips");
+        if (chips) chips.remove();
 
-/* =========================================================
-   CHATBOT ADD TO CART
-========================================================= */
+        draw("user", text);
+        const typing = document.createElement("div");
+        typing.className = "msg bot";
+        typing.innerHTML = '<span class="typing"><i></i><i></i><i></i></span>';
+        $("#chat-msgs").appendChild(typing);
+        $("#chat-msgs").scrollTop = 1e6;
 
-document.addEventListener(
-    "click",
-    event => {
-
-        const button =
-            event.target.closest(
-                ".chat-product-cart"
-            );
-
-
-        if (!button) {
-
-            return;
-
-        }
-
-
-        /* -------------------------------------------------
-           GET PRODUCT ID
-        ------------------------------------------------- */
-
-        const productId =
-            Number(
-                button.dataset.productId
-            );
-
-
-        /* -------------------------------------------------
-           FIND PRODUCT
-        ------------------------------------------------- */
-
-        const product =
-            getProducts().find(
-                item =>
-                    Number(item.id) === productId
-            );
-
-
-        if (!product) {
-
-            addMessage(
-                "Sorry 😕 I couldn't find that product.",
-                "bot"
-            );
-
-            return;
-
-        }
-
-
-        /* -------------------------------------------------
-           GET EXISTING CART
-        ------------------------------------------------- */
-
-        let cart =
-            JSON.parse(
-                localStorage.getItem("cart")
-            ) || [];
-
-
-        /* -------------------------------------------------
-           CHECK EXISTING PRODUCT
-        ------------------------------------------------- */
-
-        const existingProduct =
-            cart.find(
-                item =>
-                    Number(item.id) === productId
-            );
-
-
-        /* -------------------------------------------------
-           INCREASE QUANTITY
-        ------------------------------------------------- */
-
-        if (existingProduct) {
-
-            existingProduct.quantity =
-                (existingProduct.quantity || 1) + 1;
-
-        }
-
-
-        /* -------------------------------------------------
-           ADD NEW PRODUCT
-        ------------------------------------------------- */
-
-        else {
-
-            cart.push({
-
-                id:
-                    product.id,
-
-                name:
-                    product.name,
-
-                price:
-                    product.price,
-
-                image:
-                    product.image,
-
-                categoryName:
-                    product.categoryName,
-
-                quantity:
-                    1
-
+        try {
+            const res = await fetch(API + "/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: text, history: history.slice(-6).map((h) => ({ role: h.role, text: h.text })) })
             });
-
+            const data = await res.json().catch(() => ({}));
+            typing.remove();
+            if (!res.ok || !data.success) throw new Error(data.message || "failed");
+            history.push({ role: "user", text }, { role: "model", text: data.reply, ids: data.productIds });
+            history = history.slice(-20);
+            writeJSON(KEY, history);
+            draw("bot", data.reply, data.productIds);
+        } catch (e) {
+            typing.remove();
+            draw("bot", "Sorry, I couldn't answer that right now. Please try again in a moment.");
+        } finally {
+            busy = false;
+            $("#chat-send").disabled = false;
+            $("#chat-input").focus();
         }
-
-
-        /* -------------------------------------------------
-           SAVE CART
-        ------------------------------------------------- */
-
-        localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
-        );
-
-
-        /* -------------------------------------------------
-           BUTTON FEEDBACK
-        ------------------------------------------------- */
-
-        const originalText =
-            button.textContent;
-
-
-        button.textContent =
-            "✓ Added";
-
-
-        button.disabled = true;
-
-
-        setTimeout(() => {
-
-            button.textContent =
-                originalText;
-
-            button.disabled = false;
-
-        }, 1200);
-
-
-        /* -------------------------------------------------
-           CONFIRMATION
-        ------------------------------------------------- */
-
-        addMessage(
-            `✅ ${product.name} has been added to your cart.`,
-            "bot"
-        );
-
-
-        /* -------------------------------------------------
-           UPDATE CART COUNT
-        ------------------------------------------------- */
-
-        if (
-            typeof updateCartCount === "function"
-        ) {
-
-            updateCartCount();
-
-        }
-
     }
-);
+
+    // wait for the shared header/footer, then add the widget
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
+    else build();
+})();

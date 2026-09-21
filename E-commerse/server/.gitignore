@@ -1,3 +1,6 @@
 node_modules/
 .env
-test-gemini.js
+.env.*
+!.env.example
+data/
+*.log

@@ -1,566 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Checkout | ShopEase</title>
-
-    <!-- Google Font -->
-
+    <meta name="description" content="Complete your order.">
+    <meta name="theme-color" content="#0b0d1a">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d1a'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='800' font-size='34' text-anchor='middle' fill='%23b13cff'%3ES%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- CSS -->
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
-
-<body>
-
-
-    <!-- =========================
-         NAVBAR
-    ========================== -->
-
-    <header class="navbar">
-
-        <div class="container nav-container">
-
-            <a
-                href="index.html"
-                class="logo"
-            >
-                Shop<span>Ease</span>
-            </a>
-
-
-            <nav class="nav-menu">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="products.html">
-                    Products
-                </a>
-
-                <a href="about.html">
-                    About
-                </a>
-
-                <a href="contact.html">
-                    Contact
-                </a>
-
-            </nav>
-
-
-            <div class="nav-actions">
-
-                <a
-                    href="cart.html"
-                    class="cart-btn"
-                >
-
-                    🛒
-
-                    <span class="cart-count">
-                        0
-                    </span>
-
-                </a>
-
-
-                <button
-                    class="menu-btn"
-                    type="button"
-                    aria-label="Open Menu"
-                >
-                    ☰
-                </button>
-
-            </div>
-
-        </div>
-
-    </header>
-
-
-
-    <!-- =========================
-         CHECKOUT
-    ========================== -->
-
-    <main>
-
-        <section class="checkout-section section">
-
-            <div class="container">
-
-
-                <!-- Heading -->
-
-                <div class="checkout-heading">
-
-                    <p class="section-tag">
-                        ALMOST THERE
-                    </p>
-
-                    <h1>
-                        Checkout
-                    </h1>
-
-                    <p>
-                        Complete your details to place your order.
-                    </p>
-
-                </div>
-
-
-
-                <!-- Checkout Layout -->
-
-                <div class="checkout-layout">
-
-
-                    <!-- =================
-                         CUSTOMER FORM
-                    ================== -->
-
-                    <div class="checkout-form">
-
-
-                        <!-- Customer Information -->
-
-                        <div class="checkout-card">
-
-                            <h2>
-                                Customer Information
-                            </h2>
-
-
-                            <div class="form-grid">
-
-                                <div class="form-group full">
-
-                                    <label for="full-name">
-                                        Full Name
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        id="full-name"
-                                        placeholder="Enter your full name"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="form-group">
-
-                                    <label for="email">
-                                        Email Address
-                                    </label>
-
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        placeholder="you@example.com"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="form-group">
-
-                                    <label for="phone">
-                                        Phone Number
-                                    </label>
-
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        placeholder="98XXXXXXXX"
-                                        required
-                                    >
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Shipping Address -->
-
-                        <div class="checkout-card">
-
-                            <h2>
-                                Shipping Address
-                            </h2>
-
-
-                            <div class="form-grid">
-
-                                <div class="form-group full">
-
-                                    <label for="address">
-                                        Address
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        id="address"
-                                        placeholder="Street, house number, area"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="form-group">
-
-                                    <label for="city">
-                                        City
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        id="city"
-                                        placeholder="Kathmandu"
-                                        required
-                                    >
-
-                                </div>
-
-
-                                <div class="form-group">
-
-                                    <label for="postal-code">
-                                        Postal Code
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        id="postal-code"
-                                        placeholder="44600"
-                                        required
-                                    >
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Payment -->
-
-                        <div class="checkout-card">
-
-                            <h2>
-                                Payment Method
-                            </h2>
-
-
-                            <div class="payment-options">
-
-
-                                <label class="payment-option">
-
-                                    <input
-                                        type="radio"
-                                        name="payment"
-                                        value="cod"
-                                        checked
-                                    >
-
-                                    <span class="payment-radio">
-                                    </span>
-
-
-                                    <span class="payment-info">
-
-                                        <strong>
-                                            Cash on Delivery
-                                        </strong>
-
-                                        <small>
-                                            Pay when your order arrives.
-                                        </small>
-
-                                    </span>
-
-                                </label>
-
-
-
-                                <label class="payment-option">
-
-                                    <input
-                                        type="radio"
-                                        name="payment"
-                                        value="online"
-                                    >
-
-                                    <span class="payment-radio">
-                                    </span>
-
-
-                                    <span class="payment-info">
-
-                                        <strong>
-                                            Online Payment
-                                        </strong>
-
-                                        <small>
-                                            Card / digital payment.
-                                        </small>
-
-                                    </span>
-
-                                </label>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Place Order -->
-
-                        <button
-                            type="button"
-                            class="place-order-btn"
-                            id="place-order-btn"
-                        >
-                            Place Order
-                        </button>
-
+<body data-page="checkout">
+    <div id="site-header"></div>
+    <div class="page-head"><div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span id="co-crumb">Checkout</span></nav>
+        <h1 id="co-crumb-h">Checkout</h1>
+    </div></div>
+    <main class="section" style="padding-top:36px"><div class="container" id="checkout-root">
+        <form id="checkout-form" class="checkout-layout" novalidate>
+            <div>
+                <div class="alert alert-info" id="guest-note" hidden style="margin-bottom:20px">Have an account? <a class="link" href="login.html?next=checkout.html">Sign in</a> to save your order history and use saved addresses. You can also continue as a guest.</div>
+                <div class="card">
+                    <h2>Contact</h2>
+                    <div class="form-grid">
+                        <div class="field"><label for="f-name">Full name</label><input class="input" id="f-name" type="text" placeholder="" autocomplete="name" maxlength=80 required></div>
+                        <div class="field"><label for="f-phone">Phone number</label><input class="input" id="f-phone" type="tel" placeholder="98XXXXXXXX" autocomplete="tel" maxlength=18 required></div>
+                        <div class="field full"><label for="f-email">Email</label><input class="input" id="f-email" type="email" maxlength="120" required autocomplete="email" placeholder="you@example.com"><small>We use this to identify your order when you track it.</small></div>
                     </div>
-
-
-
-                    <!-- =================
-                         ORDER SUMMARY
-                    ================== -->
-
-                    <aside class="checkout-summary">
-
-                        <h2>
-                            Your Order
-                        </h2>
-
-
-                        <div
-                            id="checkout-items"
-                            class="checkout-items"
-                        >
-                        </div>
-
-
-                        <div class="summary-divider">
-                        </div>
-
-
-                        <div class="summary-row">
-
-                            <span>
-                                Subtotal
-                            </span>
-
-                            <strong id="checkout-subtotal">
-                                NPR 0
-                            </strong>
-
-                        </div>
-
-
-                        <div class="summary-row">
-
-                            <span>
-                                Shipping
-                            </span>
-
-                            <strong>
-                                FREE
-                            </strong>
-
-                        </div>
-
-
-                        <div class="summary-divider">
-                        </div>
-
-
-                        <div class="summary-total">
-
-                            <span>
-                                Total
-                            </span>
-
-                            <strong id="checkout-total">
-                                NPR 0
-                            </strong>
-
-                        </div>
-
-                    </aside>
-
                 </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer class="footer">
-
-        <div class="container footer-container">
-
-            <div class="footer-brand">
-
-                <a
-                    href="index.html"
-                    class="logo"
-                >
-                    Shop<span>Ease</span>
-                </a>
-
-                <p>
-                    Your everyday online shopping destination.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>
-                    Quick Links
-                </h3>
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="products.html">
-                    Products
-                </a>
-
-                <a href="about.html">
-                    About
-                </a>
-
-                <a href="contact.html">
-                    Contact
-                </a>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>
-                    Customer Care
-                </h3>
-
-                <a href="#">
-                    Shipping
-                </a>
-
-                <a href="#">
-                    Returns
-                </a>
-
-                <a href="#">
-                    Privacy Policy
-                </a>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <h3>
-                    Follow Us
-                </h3>
-
-                <div class="social-links">
-
-                    <a href="#">
-                        Instagram
-                    </a>
-
-                    <a href="#">
-                        Facebook
-                    </a>
-
-                    <a href="#">
-                        Twitter
-                    </a>
-
+                <div class="card">
+                    <h2>Delivery address</h2>
+                    <div class="saved-addr" id="saved-addr" hidden></div>
+                    <div class="form-grid">
+                        <div class="field full"><label for="f-address">Address</label><input class="input" id="f-address" maxlength="200" required placeholder="Area, street, house no. / landmark" autocomplete="street-address"></div>
+                        <div class="field"><label for="f-city">City</label><input class="input" id="f-city" type="text" placeholder="" autocomplete="address-level2" maxlength=60 required></div>
+                        <div class="field"><label for="f-postalCode">Postal code (optional)</label><input class="input" id="f-postalCode" type="text" placeholder="" autocomplete="postal-code" maxlength=12></div>
+                        <div class="field full"><label for="f-notes">Order notes (optional)</label><textarea class="textarea" id="f-notes" maxlength="300" style="min-height:80px" placeholder="Anything the delivery person should know"></textarea></div>
+                    </div>
                 </div>
-
+                <div class="card"><h2>Payment</h2><div id="pay-block"></div></div>
             </div>
+            <aside class="summary">
+                <h2>Order summary</h2>
+                <div style="display:grid;gap:14px" id="sum-items"></div>
+                <div class="divider"></div>
+                <div style="display:grid;gap:12px" id="sum-rows"></div>
+                <div class="alert alert-error" id="form-error" role="alert" hidden></div>
+                <button class="btn btn-primary btn-lg" id="place-btn" type="submit"><span>Place order</span>&nbsp;·&nbsp;<span id="place-total"></span></button>
+                <p class="muted" style="font-size:12.5px;text-align:center">By placing your order you agree to our <a class="link" href="policy.html?p=terms">terms</a> and <a class="link" href="policy.html?p=returns">returns policy</a>.</p>
+            </aside>
+        </form>
+    </div></main>
+    <div id="site-footer"></div>
 
-        </div>
-
-
-        <div class="footer-bottom">
-
-            <p>
-                © 2026 ShopEase. All rights reserved.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- JavaScript -->
-
+    <script src="js/config.js"></script>
     <script src="js/products.js"></script>
-
+    <script src="js/core.js"></script>
     <script src="js/checkout.js"></script>
-
-    <script src="js/app.js"></script>
     <script src="js/chatbot.js"></script>
-
 </body>
-
 </html>

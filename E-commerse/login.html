@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in | ShopEase</title>
+    <meta name="description" content="Sign in or create your account.">
+    <meta name="theme-color" content="#0b0d1a">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d1a'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='800' font-size='34' text-anchor='middle' fill='%23b13cff'%3ES%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="login">
+    <div id="site-header"></div>
+    <main class="auth-wrap">
+        <div class="auth-art"><div><h2>Everything you love, in one place.</h2><p>Track orders, save favourites and check out faster.</p></div></div>
+        <div class="auth-form"><div class="auth-box">
+            <div><h1 id="auth-title">Welcome back</h1><p class="muted" id="auth-sub" style="margin-top:6px"></p></div>
+            <div class="auth-tabs" role="tablist"><button type="button" data-mode="login">Sign in</button><button type="button" data-mode="register">Create account</button></div>
+            <div class="alert alert-error" id="auth-error" role="alert" hidden></div>
+
+            <form id="login-form" style="display:grid;gap:16px">
+                <div class="field"><label for="l-email">Email</label><input class="input" id="l-email" type="email" autocomplete="email" required></div>
+                <div class="field"><label for="l-password">Password</label><input class="input" id="l-password" type="password" autocomplete="current-password" required></div>
+                <button class="btn btn-primary btn-lg btn-block" id="login-btn" type="submit">Sign in</button>
+            </form>
+
+            <form id="register-form" style="display:grid;gap:16px" hidden>
+                <div class="field"><label for="r-name">Full name</label><input class="input" id="r-name" autocomplete="name" maxlength="80" required></div>
+                <div class="field"><label for="r-email">Email</label><input class="input" id="r-email" type="email" autocomplete="email" required></div>
+                <div class="field"><label for="r-phone">Phone</label><input class="input" id="r-phone" type="tel" autocomplete="tel" placeholder="98XXXXXXXX" maxlength="18"></div>
+                <div class="field"><label for="r-password">Password</label><input class="input" id="r-password" type="password" autocomplete="new-password" minlength="8" required><small>At least 8 characters.</small></div>
+                <label class="seller-toggle"><input type="checkbox" id="f-seller"><span><strong style="color:var(--ink)">I want to sell on ShopEase</strong><small>Open a seller account. Our team reviews new sellers before they can list products.</small></span></label>
+                <div id="seller-fields" style="display:grid;gap:16px" hidden>
+                    <div class="field"><label for="r-shop">Shop name</label><input class="input" id="r-shop" maxlength="80"></div>
+                    <div class="field"><label for="r-shopdesc">About your shop (optional)</label><textarea class="textarea" id="r-shopdesc" style="min-height:80px" maxlength="300"></textarea></div>
+                </div>
+                <button class="btn btn-primary btn-lg btn-block" id="register-btn" type="submit">Create account</button>
+            </form>
+            <p class="muted" style="font-size:13px;text-align:center"><a class="link" href="index.html">← Back to store</a></p>
+        </div></div>
+    </main>
+    <div id="site-footer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
