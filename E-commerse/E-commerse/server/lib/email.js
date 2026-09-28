@@ -56,9 +56,9 @@ async function send({ to, subject, html, text }) {
 
 function layout(storeName, title, bodyHtml) {
     return `<div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#23243a">
-        <div style="background:#0b0d1a;padding:20px 28px;border-radius:12px 12px 0 0"><span style="color:#fff;font-size:20px;font-weight:800">${storeName}</span></div>
+        <div style="background:#10201d;padding:20px 28px;border-radius:12px 12px 0 0"><span style="color:#fff;font-size:20px;font-weight:800">${storeName}</span></div>
         <div style="border:1px solid #e8e8f1;border-top:0;border-radius:0 0 12px 12px;padding:28px">
-            <h2 style="margin:0 0 14px;color:#0b0d1a">${title}</h2>
+            <h2 style="margin:0 0 14px;color:#10201d">${title}</h2>
             ${bodyHtml}
             <p style="margin-top:28px;color:#6a6b82;font-size:13px">This is an automated message from ${storeName}.</p>
         </div></div>`;
@@ -78,7 +78,7 @@ async function orderConfirmation(order, storeName) {
 
 async function passwordReset(user, resetUrl, storeName) {
     const body = `<p>Hi ${user.name.split(" ")[0]}, we received a request to reset your password.</p>
-        <p><a href="${resetUrl}" style="display:inline-block;background:#8f22e0;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700">Reset password</a></p>
+        <p><a href="${resetUrl}" style="display:inline-block;background:#0f766e;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700">Reset password</a></p>
         <p style="color:#6a6b82;font-size:13px">This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>`;
     return send({ to: user.email, subject: "Reset your password", html: layout(storeName, "Reset your password", body), text: `Reset your password: ${resetUrl}` });
 }
@@ -86,14 +86,14 @@ async function passwordReset(user, resetUrl, storeName) {
 async function sellerApproved(user, storeUrl, storeName) {
     const body = `<p>Hi ${user.name.split(" ")[0]}, good news — your seller account has been approved!</p>
         <p>You can now sign in and start adding products.</p>
-        <p><a href="${storeUrl}" style="display:inline-block;background:#0b0d1a;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700">Go to seller dashboard</a></p>`;
+        <p><a href="${storeUrl}" style="display:inline-block;background:#10201d;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700">Go to seller dashboard</a></p>`;
     return send({ to: user.email, subject: "Your seller account was approved", html: layout(storeName, "You're approved to sell", body), text: "Your seller account was approved." });
 }
 
 async function backInStock(user, product, url, storeName) {
     const body = `<p>Hi ${user.name.split(" ")[0]}, an item on your wishlist is back in stock:</p>
         <p style="font-weight:700;font-size:16px">${product.name} — NPR ${product.price.toLocaleString("en-IN")}</p>
-        <p><a href="${url}" style="display:inline-block;background:#8f22e0;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700">View product</a></p>`;
+        <p><a href="${url}" style="display:inline-block;background:#0f766e;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700">View product</a></p>`;
     return send({ to: user.email, subject: `Back in stock: ${product.name}`, html: layout(storeName, "Back in stock!", body), text: `${product.name} is back in stock.` });
 }
 

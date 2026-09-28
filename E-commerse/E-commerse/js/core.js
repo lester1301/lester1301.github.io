@@ -110,6 +110,7 @@
         upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
         alert: '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
         eye: '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+        eyeoff: '<path d="M17.9 17.9A10.9 10.9 0 0 1 12 20C5 20 1 12 1 12a18.5 18.5 0 0 1 5.1-5.9M9.9 4.2A9.1 9.1 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.2 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2M1 1l22 22"/>',
         home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
         print: '<path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/>',
         clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
@@ -760,6 +761,41 @@
     }
 
     /* ---------------------------------------------------------
+       PASSWORD FIELDS: every <input type="password"> gets a show/hide button,
+       including forms that are added later (modals, panels).
+    --------------------------------------------------------- */
+    function enhancePasswords(root) {
+        $$('input[type="password"]:not([data-pw])', root || document).forEach((input) => {
+            input.dataset.pw = "1";
+            const wrap = document.createElement("span");
+            wrap.className = "pw-wrap";
+            input.parentNode.insertBefore(wrap, input);
+            wrap.appendChild(input);
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "pw-toggle";
+            btn.setAttribute("aria-label", "Show password");
+            btn.setAttribute("aria-pressed", "false");
+            btn.innerHTML = icon("eye");
+            btn.addEventListener("click", () => {
+                const show = input.type === "password";
+                input.type = show ? "text" : "password";
+                btn.innerHTML = icon(show ? "eyeoff" : "eye");
+                btn.setAttribute("aria-label", show ? "Hide password" : "Show password");
+                btn.setAttribute("aria-pressed", String(show));
+                input.focus();
+            });
+            wrap.appendChild(btn);
+        });
+    }
+    function watchPasswords() {
+        enhancePasswords();
+        new MutationObserver((changes) => {
+            if (changes.some((c) => c.addedNodes.length)) enhancePasswords();
+        }).observe(document.body, { childList: true, subtree: true });
+    }
+
+    /* ---------------------------------------------------------
        LANGUAGE (partial — header, footer and common buttons only)
        Product descriptions, admin/seller panels and page body content
        stay in English. This is a lightweight starting point, not a
@@ -840,6 +876,7 @@
             const boot = () => {
                 buildHeader();
                 renderFooter();
+                watchPasswords();
                 Settings.onChange(() => { renderAnnounce(); renderNav(); renderFooter(); loadGA(); if (App.onSettings) App.onSettings(); });
                 Settings.load();
                 loadGA();
@@ -868,5 +905,5 @@
         onSettings: null
     };
 
-    window.SE = { API, ROOT, $, $$, esc, money, fmtDate, fmtDateTime, debounce, icon, stars, toast, modal, Auth, api, imgSrc, Settings, Catalog, Cart, Wishlist, App, productCard, productBadge, skeletons, statusPill, paymentPill, STATUS, PAYMENT, link, readJSON, writeJSON, logoHTML };
+    window.SE = { watchPasswords, API, ROOT, $, $$, esc, money, fmtDate, fmtDateTime, debounce, icon, stars, toast, modal, Auth, api, imgSrc, Settings, Catalog, Cart, Wishlist, App, productCard, productBadge, skeletons, statusPill, paymentPill, STATUS, PAYMENT, link, readJSON, writeJSON, logoHTML };
 })();

@@ -246,6 +246,7 @@
             </div>
         </div>`;
 
+        SE.watchPasswords();
         $("#p-logout").addEventListener("click", Auth.logout);
         $("#p-menu").addEventListener("click", () => document.body.classList.toggle("side-open"));
         document.addEventListener("click", (e) => {

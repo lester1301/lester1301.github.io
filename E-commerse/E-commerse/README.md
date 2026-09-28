@@ -30,11 +30,10 @@ Run the automatic tests any time: `npm test`
 
 **Backend (Render)**
 1. Service root directory: `E-commerse/server` · Build: `npm install` · Start: `npm start`
-2. Environment variables: `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `GEMINI_API_KEY`, `ALLOWED_ORIGINS=https://lester1301.github.io`
-3. **Important — persistent storage.** Orders, users and uploaded product photos are saved in `DATA_DIR`.
-   On Render's free plan the disk is wiped on every deploy/restart, so **everything would be lost**.
-   Before you take real orders: use a paid instance with a **Disk** (mount at `/var/data`, set `DATA_DIR=/var/data`),
-   or host on a VPS/Railway volume. (Later you can swap `server/lib/store.js` for MongoDB/Postgres.)
+2. Environment variables: `MONGODB_URI`, `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `SITE_URL`, `ALLOWED_ORIGINS=https://lester1301.github.io`, `GEMINI_API_KEY`
+3. **Database (MongoDB Atlas, free):** set `MONGODB_URI` (and optionally `MONGODB_DB`, default `shopease`). Orders, users, settings and uploaded product photos are then stored in MongoDB and survive every Render restart. No Render Disk needed.
+   In Atlas: Database Access -> create a user; Network Access -> allow `0.0.0.0/0` (Render's IPs change). If the password has special characters (`@ : / ?`), URL-encode them in the URI.
+   Without `MONGODB_URI` the app falls back to a local JSON file (fine for your computer only).
 
 **Frontend (GitHub Pages)**
 1. Replace the whole `E-commerse` folder in your repo with this one (delete the old files first, `js/app.js`, `hero-slider.js`, `wishlist-page.js` and the old images are no longer used).
@@ -53,6 +52,7 @@ Run the automatic tests any time: `npm test`
 - **Admin** (`admin/`): dashboard, all orders (confirm online payments, change status), all products (approve/reject), users (approve sellers, block, reset password), coupons, reviews, contact messages, settings and categories
 
 ## New in this version
+- **MongoDB storage** (photos too), **show/hide password** on every password field, new teal-green colour theme.
 - **Emails** (Resend or Brevo): order confirmation, forgot-password link, seller approved, back-in-stock code is NOT included (see below). Set `EMAIL_PROVIDER`, `EMAIL_API_KEY`, `EMAIL_FROM`, `SITE_URL`. Without them, emails are only logged.
 - **Forgot password**: `login.html` -> "Forgot your password?" -> emailed link -> `reset.html`.
 - **eSewa + Khalti** automatic payment (test credentials built in). For real money set `ESEWA_MERCHANT_CODE`, `ESEWA_SECRET_KEY`, `ESEWA_GATEWAY_URL`, `KHALTI_SECRET_KEY`, `KHALTI_API_BASE` (see `.env.example`). Bank transfer stays manual.
@@ -66,7 +66,7 @@ Run the automatic tests any time: `npm test`
 ## Not built yet
 - Email verification on signup and "back in stock" wishlist alerts (the email helper for it exists in `server/lib/email.js`, but nothing triggers it yet).
 - Colour variants have no separate stock (stock is per size or per product).
-- Real database (MongoDB/Postgres): data is still a JSON file, so keep a Render Disk and download backups regularly.
+- Data is stored in MongoDB. Still download a backup from Admin > Settings now and then.
 - Khalti/eSewa/email were tested with mocks only. Test them once after deploying.
 - PDF invoice: use "Print invoice" and choose "Save as PDF" in the browser.
 

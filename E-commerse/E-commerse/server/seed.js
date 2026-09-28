@@ -180,7 +180,7 @@ async function seed() {
         changed = true;
     }
 
-    if (changed) store.flush();
+    if (changed) await store.flush();
 }
 
 module.exports = { seed, defaultSettings, demoProducts };

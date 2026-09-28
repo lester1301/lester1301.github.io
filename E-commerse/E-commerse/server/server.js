@@ -50,8 +50,25 @@ app.use(attachUser);
    UPLOADS (product images)
 ========================================================= */
 
+// With MongoDB, photos live in the database (they'd vanish from Render's free disk).
+// Without it (local development), they are plain files on disk.
 const UPLOAD_DIR = path.join(store.DATA_DIR, "uploads");
-app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "30d", immutable: true, dotfiles: "deny" }));
+if (store.usingMongo) {
+    app.get("/uploads/:name", async (req, res) => {
+        if (!/^[a-z0-9._-]+$/i.test(req.params.name)) return fail(res, 404, "Not found.");
+        try {
+            const file = await store.getUpload(req.params.name);
+            if (!file) return fail(res, 404, "Not found.");
+            res.set({ "Content-Type": file.type, "Cache-Control": "public, max-age=2592000, immutable" });
+            res.send(file.buffer);
+        } catch (error) {
+            console.error("[uploads] read failed:", error.message);
+            fail(res, 500, "Could not load this image.");
+        }
+    });
+} else {
+    app.use("/uploads", express.static(UPLOAD_DIR, { maxAge: "30d", immutable: true, dotfiles: "deny" }));
+}
 
 const IMAGE_TYPES = {
     "image/jpeg": { ext: "jpg", magic: [0xff, 0xd8, 0xff] },
@@ -93,7 +110,12 @@ app.post(
         }
 
         const name = `${Date.now().toString(36)}-${crypto.randomBytes(5).toString("hex")}.${type.ext}`;
-        fs.writeFileSync(path.join(UPLOAD_DIR, name), buffer);
+        try {
+            await store.saveUpload(name, buffer, match[1]);
+        } catch (error) {
+            console.error("[upload] save failed:", error.message);
+            return fail(res, 500, "Could not save the image. Please try again.");
+        }
         ok(res, { url: `/uploads/${name}` });
     }
 );
@@ -102,7 +124,7 @@ app.post(
    API ROUTES
 ========================================================= */
 
-app.get("/api/health", (req, res) => ok(res, { message: "ShopEase server is running.", time: new Date().toISOString() }));
+app.get("/api/health", (req, res) => ok(res, { message: "ShopEase server is running.", storage: store.usingMongo ? "mongodb" : "file", time: new Date().toISOString() }));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/account", require("./routes/account"));
@@ -148,11 +170,13 @@ app.use((err, req, res, next) => {
    START
 ========================================================= */
 
-seed()
+store
+    .init()
+    .then(() => seed())
     .then(() => {
         app.listen(PORT, "0.0.0.0", () => {
             console.log(`ShopEase server running on port ${PORT}`);
-            console.log(`Data folder: ${store.DATA_DIR}`);
+            console.log(store.usingMongo ? "Storage: MongoDB" : `Storage: JSON file in ${store.DATA_DIR} (set MONGODB_URI for production)`);
         });
     })
     .catch((error) => {

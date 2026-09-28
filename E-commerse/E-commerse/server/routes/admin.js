@@ -577,7 +577,7 @@ router.get("/backup", (req, res) => {
     res.send(JSON.stringify(store.db(), null, 2));
 });
 
-router.post("/restore", express.json({ limit: "20mb" }), (req, res) => {
+router.post("/restore", express.json({ limit: "20mb" }), async (req, res) => {
     const data = req.body;
     const required = ["users", "products", "orders", "settings"];
     if (!data || typeof data !== "object" || !required.every((k) => k in data)) {
@@ -586,7 +586,8 @@ router.post("/restore", express.json({ limit: "20mb" }), (req, res) => {
     if (req.body.confirm !== "REPLACE") {
         return fail(res, 400, 'To confirm this replaces ALL current data, resend with "confirm": "REPLACE".');
     }
-    store.replace(data);
+    const { confirm, ...backup } = data;
+    await store.replace(backup);
     ok(res, { message: "Backup restored. Refresh the page." });
 });
 
