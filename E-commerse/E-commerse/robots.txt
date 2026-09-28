@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lester1301.github.io/E-commerse/sitemap.xml

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Update the domain below if this site is served from somewhere else.
+     Product pages aren't listed here since they're generated client-side from
+     the API; if you need them indexed individually, consider server-rendering
+     them or submitting your product feed to Google Merchant Center instead. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url><loc>https://lester1301.github.io/E-commerse/index.html</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+    <url><loc>https://lester1301.github.io/E-commerse/products.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+    <url><loc>https://lester1301.github.io/E-commerse/about.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+    <url><loc>https://lester1301.github.io/E-commerse/contact.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+    <url><loc>https://lester1301.github.io/E-commerse/policy.html?p=shipping</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+    <url><loc>https://lester1301.github.io/E-commerse/policy.html?p=returns</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+</urlset>

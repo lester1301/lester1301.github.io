@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ShopEase | Fashion, shoes, electronics and accessories</title>
+    <meta name="description" content="Shop fashion, shoes, electronics and accessories online. Cash on delivery and fast delivery.">
+    <meta name="theme-color" content="#0b0d1a">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ShopEase | Fashion, shoes, electronics and accessories">
+    <meta property="og:description" content="Shop fashion, shoes, electronics and accessories online. Cash on delivery and fast delivery.">
+    <meta property="og:image" content="https://lester1301.github.io/E-commerse/images/banners/hero-1.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d1a'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='800' font-size='34' text-anchor='middle' fill='%23b13cff'%3ES%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+    <div id="site-header"></div>
+    <main>
+        <section class="hero" aria-roledescription="carousel" aria-label="Featured collections">
+            <div id="hero-slides"></div>
+            <div class="hero-ui"><div class="container">
+                <div class="hero-dots" id="hero-dots"></div>
+                <div class="hero-arrows">
+                    <button id="hero-prev" type="button" aria-label="Previous slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                    <button id="hero-next" type="button" aria-label="Next slide"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                </div>
+            </div></div>
+        </section>
+
+        <section class="trust" id="trust" aria-label="Why shop with us"></section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-head"><div><h2>Shop by category</h2><p>Find what you need, fast.</p></div></div>
+                <div class="cat-grid" id="cat-grid"></div>
+            </div>
+        </section>
+
+        <section class="section tint">
+            <div class="container">
+                <div class="section-head"><h2>Picked for you</h2><div class="tabs" id="home-tabs" role="tablist"></div></div>
+                <div class="product-grid" id="home-products"></div>
+                <div style="text-align:center;margin-top:36px"><a class="btn btn-outline btn-lg" href="products.html">View all products</a></div>
+            </div>
+        </section>
+
+        <section class="section promo" id="promo" style="padding-bottom:64px">
+            <div class="container"><div class="promo-card">
+                <div><h2 id="promo-title">Deals on selected items</h2><p>Limited-time prices on products you'll actually use. Grab them while stock lasts.</p></div>
+                <a class="btn btn-light btn-lg" href="products.html?sale=1">Shop the sale</a>
+            </div></div>
+        </section>
+    </main>
+    <div id="site-footer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/products.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>
