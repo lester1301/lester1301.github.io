@@ -4,5 +4,5 @@
    On localhost the site automatically talks to http://localhost:3000
 ========================================================= */
 window.SHOPEASE_CONFIG = {
-    API_BASE: "https://lester1301-github-io.onrender.comgit add ."
+    API_BASE: "https://lester1301-github-io.onrender.com"
 };
