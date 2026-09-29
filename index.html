@@ -1,107 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Anil Portfolio</title>
-
-    <link rel="stylesheet" href="style.css">
-    <style>
-/* ===== SHOP EASE PROJECT PREVIEW TEST FIX ===== */
-
-.project-card {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
-
-    gap: 40px !important;
-
-    overflow: hidden !important;
-
-    box-sizing: border-box !important;
-}
-
-.project-card > * {
-    min-width: 0 !important;
-    max-width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-.project-content {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-}
-
-.project-preview {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    height: 300px !important;
-
-    overflow: hidden !important;
-
-    box-sizing: border-box !important;
-}
-
-.project-preview img {
-    display: block !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-
-    height: 100% !important;
-
-    object-fit: cover !important;
-
-    box-sizing: border-box !important;
-}
-
-@media (max-width: 900px) {
-    .project-card {
-        grid-template-columns: 1fr !important;
-    }
-
-    .project-preview {
-        width: 100% !important;
-        height: 320px !important;
-    }
-}
-
-@media (max-width: 768px) {
-    .project-card {
-        grid-template-columns: 1fr !important;
-        gap: 20px !important;
-    }
-
-    .project-preview {
-        width: 100% !important;
-        height: 260px !important;
-    }
-}
-
-
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anil Jha — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+<canvas id="net" aria-hidden="true"></canvas>
+
 <header>
-
-    <div class="logo">
-        <h1>ANIL</h1>
-    </div>
-
-    <button class="menu-toggle" aria-label="Open menu">
-        ☰
-    </button>
-
+    <div class="logo"><h1>ANIL</h1></div>
+    <button class="menu-toggle" aria-label="Open menu">☰</button>
     <nav id="navbar">
         <ul>
             <li><a href="#home">Home</a></li>
@@ -110,256 +23,198 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-
 </header>
 
+<main class="wrap">
 
-    <!-- ==================== HERO ==================== -->
-
-    <section id="home" class="hero">
-
-        <div class="hero-text">
-
-            <div class="status-badge">
-                <span></span>
-                Available for work
-            </div>
-
-            <p>Hello, I'm</p>
-
-            <h2>Anil Jha</h2>
-
-            <h3>Frontend Developer</h3>
-
-            <p>
-                I create modern, responsive and user-friendly websites
-                while continuously learning new technologies.
-            </p>
-
-            <div class="hero-buttons">
-
-                <a href="#projects" class="btn">
-                    View Projects
-                </a>
-
-                <a href="resume.pdf" class="btn secondary" download>
-                    Download CV
-                </a>
-
-            </div>
-
+<!-- HERO -->
+<section id="home" class="hero">
+    <div class="hero-text">
+        <div class="status-badge"><span></span>Available for work</div>
+        <h2>Anil Jha</h2>
+        <div class="role" data-roles="Frontend Developer|React Builder|AI App Tinkerer">Frontend Developer</div>
+        <p class="lead">I create modern, responsive and user-friendly websites while continuously learning new technologies.</p>
+        <div class="hero-buttons">
+            <a href="#projects" class="btn">View Projects</a>
+            <a href="resume.pdf" class="btn secondary" download>Download CV</a>
         </div>
-
-
-        <div class="hero-image">
-
-            <img
-                src="images/spiderman.jpeg"
-                alt="spider-man"
-            >
-
+    </div>
+    <div class="hero-image">
+        <div class="holo" id="holo">
+            <div class="frame"><img src="images/spiderman.jpeg" alt="Anil Jha"></div>
+            <div class="scan"></div>
         </div>
+    </div>
+</section>
 
-    </section>
-
-
-    <!-- ==================== PROJECTS ==================== -->
-
-    <section id="projects" class="projects">
-
-        <div class="section-heading">
-
-            <p>My Work</p>
-
-            <h2>Featured Project</h2>
-
-            <span>
-                A collection of projects I've built while learning
-                and improving my development skills.
-            </span>
-
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-heading">
+        <h2>About me</h2>
+    </div>
+    <div class="about-grid">
+        <p>I'm a frontend developer who enjoys turning ideas into fast, clean interfaces. I've built a calculator, a full e-commerce store and an AI chat app, and every project taught me something new about design, state and shipping real products.</p>
+        <div class="skills">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>React</span><span>Node.js</span><span>MongoDB</span><span>Git</span>
         </div>
+    </div>
+</section>
 
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="section-heading">
+        <h2>Featured projects</h2>
+        <span>A collection of projects I've built while learning and improving my development skills.</span>
+    </div>
 
-        <!-- ==================== PROJECT 01 ==================== -->
-
-        <div class="project-card">
-
-            <div class="project-content">
-
-                <span class="project-number">01</span>
-
-                <h3>Modern Calculator</h3>
-
-                <p>
-                    A fully functional and responsive calculator
-                    built using HTML, CSS and JavaScript.
-                    It supports arithmetic operations, keyboard
-                    input, percentage, decimal numbers and more.
-                </p>
-
-
-                <div class="project-tech">
-
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>JavaScript</span>
-
-                </div>
-
-
-                <div class="project-buttons">
-
-                    <a
-                        href="Calculator/index.html"
-                        class="project-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Live Demo ↗
-                    </a>
-
-                </div>
-
+    <!-- Calculator -->
+    <div class="project-card">
+        <div class="project-content">
+            <h3>Modern Calculator</h3>
+            <p>A glass-style calculator with a real expression engine: brackets, powers, square root, percentages, live result preview, calculation history and full keyboard support.</p>
+            <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <div class="project-buttons">
+                <a href="Calculator/index.html" class="project-btn" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
             </div>
-
-
-            <div class="project-preview">
-
-                <div class="preview-calculator">
-
-                    <div class="preview-display">
-                        7 × 8 = 56
-                    </div>
-
-
-                    <div class="preview-buttons">
-
-                        <span>AC</span>
-                        <span>⌫</span>
-                        <span>±</span>
-                        <span>%</span>
-
-                        <span>7</span>
-                        <span>8</span>
-                        <span>9</span>
-                        <span>÷</span>
-
-                        <span>4</span>
-                        <span>5</span>
-                        <span>6</span>
-                        <span>×</span>
-
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                        <span>+</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
-
-
-        <!-- ==================== PROJECT 02 ==================== -->
-
-        <div class="project-card">
-
-            <div class="project-content">
-
-                <span class="project-number">02</span>
-
-                <h3>ShopEase — E-Commerce Website</h3>
-
-                <p>
-                    A modern and responsive e-commerce website built
-                    using HTML, CSS and JavaScript. It includes product
-                    browsing, product details, wishlist, shopping cart,
-                    checkout flow and dynamic interactions using
-                    LocalStorage.
-                </p>
-
-
-                <div class="project-tech">
-
-                    <span>HTML</span>
-                    <span>CSS</span>
-                    <span>JavaScript</span>
-                    <span>LocalStorage</span>
-
+        <div class="project-preview">
+            <div class="preview-calculator">
+                <div class="preview-display">(7 × 8) ÷ 2 = 28</div>
+                <div class="preview-buttons">
+                    <span>AC</span><span>⌫</span><span>%</span><span>÷</span>
+                    <span>7</span><span>8</span><span>9</span><span>×</span>
+                    <span>4</span><span>5</span><span>6</span><span>−</span>
+                    <span>1</span><span>2</span><span>3</span><span>+</span>
                 </div>
-
-
-                <div class="project-buttons">
-
-                    <a
-                        href="https://lester1301.github.io/E-commerse/E-commerse/"
-                        class="project-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Live Demo ↗
-                    </a>
-
-
-                    <a
-                        href="https://lester1301.github.io/E-commerse/E-commerse/"
-                        class="project-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        View Code ↗
-                    </a>
-
-                </div>
-
             </div>
-
-
-           <div class="project-preview">
-
-    <img
-        src="E-commerse/images/portfolio-preview.jpeg"
-        alt="ShopEase E-Commerce Website Preview"
-    >
-
-</div>
-
         </div>
+    </div>
 
-    <script>
-const menuToggle = document.querySelector(".menu-toggle");
-const navbar = document.querySelector("nav");
+    <!-- ShopEase -->
+    <div class="project-card rev">
+        <div class="project-content">
+            <h3>ShopEase — E-Commerce Website</h3>
+            <p>A modern and responsive e-commerce website with product browsing, product details, wishlist, shopping cart, checkout flow and dynamic interactions using LocalStorage.</p>
+            <div class="project-tech"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>LocalStorage</span></div>
+            <div class="project-buttons">
+                <a href="https://lester1301.github.io/E-commerse/E-commerse/" class="project-btn" target="_blank" rel="noopener noreferrer">Live Demo ↗</a>
+            </div>
+        </div>
+        <div class="project-preview">
+            <img src="E-commerse/E-commerse/images/banners/hero-1.jpg" alt="ShopEase E-Commerce Website Preview">
+        </div>
+    </div>
 
-menuToggle.addEventListener("click", () => {
-    navbar.classList.toggle("active");
+    <!-- G-GPT -->
+    <div class="project-card">
+        <div class="project-content">
+            <h3>G-GPT — AI Chat Assistant</h3>
+            <p>A full-stack AI assistant powered by Gemini. It has login and signup with password reset, saved chat history, markdown replies with code, voice mode and an image gallery.</p>
+            <div class="project-tech"><span>React</span><span>Vite</span><span>Node.js</span><span>MongoDB</span><span>Gemini API</span><span>JWT</span></div>
+            <div class="project-buttons">
+                
+                <a href="https://g-gpt-wheat.vercel.app/" class="project-btn" target="_blank" rel="noopener noreferrer">Live demo ↗</a>
+            </div>
+        </div>
+        <div class="project-preview">
+            <div class="gg">
+                <div class="u">Explain closures in JavaScript</div>
+                <div class="a">A closure is a function that remembers the variables from where it was created…</div>
+                <div class="t"><i></i><i></i><i></i></div>
+                <div class="in">Message G-GPT…</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+    <div class="contact-box">
+        <h2>Let's build something</h2>
+        <p>Have a project or an opportunity in mind? Check my code on GitHub.</p>
+        <a href="https://github.com/lester1301" class="btn" target="_blank" rel="noopener noreferrer">Open GitHub ↗</a>
+         <a href="https://www.instagram.com/lester_01_13?stkn=bnpqYmozNXRzajI4" class="btn" target="_blank" rel="noopener noreferrer">Add me on instagram ↗</a>
+    </div>
+</section>
+
+</main>
+<footer>© 2026 Anil Jha</footer>
+
+<script>
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* mobile menu */
+const nav = document.getElementById("navbar");
+document.querySelector(".menu-toggle").addEventListener("click", () => nav.classList.toggle("active"));
+nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => nav.classList.remove("active")));
+
+/* particle network that reacts to the cursor */
+const c = document.getElementById("net"), x = c.getContext("2d");
+let W, H, P = [], m = { x: -999, y: -999 };
+function size() {
+  W = c.width = innerWidth; H = c.height = innerHeight;
+  P = Array.from({ length: Math.min(90, (W * H) / 16000 | 0) }, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35
+  }));
+}
+function draw() {
+  x.clearRect(0, 0, W, H);
+  for (const p of P) {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    if (p.y < 0 || p.y > H) p.vy *= -1;
+    const dx = p.x - m.x, dy = p.y - m.y, d = Math.hypot(dx, dy);
+    if (d < 130 && d > 0) { p.x += dx / d * 1.3; p.y += dy / d * 1.3; }
+    x.fillStyle = "rgba(180,190,255,.7)"; x.fillRect(p.x, p.y, 2, 2);
+  }
+  for (let i = 0; i < P.length; i++) {
+    for (let j = i + 1; j < P.length; j++) {
+      const d = Math.hypot(P[i].x - P[j].x, P[i].y - P[j].y);
+      if (d < 120) { x.strokeStyle = `rgba(124,92,255,${.28 * (1 - d / 120)})`; x.beginPath(); x.moveTo(P[i].x, P[i].y); x.lineTo(P[j].x, P[j].y); x.stroke(); }
+    }
+    const d = Math.hypot(P[i].x - m.x, P[i].y - m.y);
+    if (d < 170) { x.strokeStyle = `rgba(54,226,255,${.6 * (1 - d / 170)})`; x.beginPath(); x.moveTo(P[i].x, P[i].y); x.lineTo(m.x, m.y); x.stroke(); }
+  }
+  if (!reduce) requestAnimationFrame(draw);
+}
+size(); draw();
+addEventListener("resize", () => { size(); if (reduce) draw(); });
+addEventListener("pointermove", e => { m.x = e.clientX; m.y = e.clientY; });
+
+/* portrait tilt */
+const holo = document.getElementById("holo");
+if (!reduce) addEventListener("pointermove", e => {
+  const r = holo.getBoundingClientRect();
+  const nx = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+  const ny = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+  holo.style.setProperty("--ry", nx * 28 + "deg");
+  holo.style.setProperty("--rx", -ny * 28 + "deg");
 });
 
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener("click", function () {
+/* project card spotlight */
+document.querySelectorAll(".project-card").forEach(card =>
+  card.addEventListener("pointermove", e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--mx", e.clientX - r.left + "px");
+    card.style.setProperty("--my", e.clientY - r.top + "px");
+  })
+);
 
-        const targetId = this.getAttribute("href");
-        const target = document.querySelector(targetId);
-
-        if (target) {
-            navbar.classList.remove("active");
-
-            setTimeout(() => {
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }, 100);
-            
-        }
-    });
-});
+/* role typewriter */
+const role = document.querySelector(".role");
+if (!reduce) {
+  const roles = role.dataset.roles.split("|");
+  let ri = 0, ci = roles[0].length, del = true;
+  (function type() {
+    const w = roles[ri];
+    role.textContent = w.slice(0, ci);
+    if (del) { ci--; if (ci < 0) { del = false; ri = (ri + 1) % roles.length; ci = 0; } }
+    else { ci++; if (ci > roles[ri].length) { del = true; setTimeout(type, 1600); return; } }
+    setTimeout(type, del ? 35 : 70);
+  })();
+  setTimeout(() => {}, 0);
+}
 </script>
-   
-
 </body>
-
 </html>

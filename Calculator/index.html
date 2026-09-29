@@ -1,68 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Calculator</title>
-
-    <link rel="stylesheet" href="style.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;700&family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    <div class="calculator">
-        <div class="history"></div>
-
-       <div class="display">
-
-    <div class="expression"></div>
-
-    <div class="result">0</div>
-
-</div>
-
-        <div class="buttons">
-
-    <button class="clear">AC</button>
-    <button class="backspace">⌫</button>
-    <button class="plus-minus">±</button>
-    <button class="percentage">%</button>
-    <button class="operator">÷</button>
-
-    <button class="number">7</button>
-    <button class="number">8</button>
-    <button class="number">9</button>
-    <button class="operator">×</button>
-
-    <button class="number">4</button>
-    <button class="number">5</button>
-    <button class="number">6</button>
-    <button class="operator">−</button>
-
-    <button class="number">1</button>
-    <button class="number">2</button>
-    <button class="number">3</button>
-    <button class="operator">+</button>
-
-    <button class="number">0</button>
-    <button class="number">.</button>
-    <button class="equals">=</button>
-
-</div>
-
-
-        </div>
-
+<div class="aurora" aria-hidden="true"></div>
+<main class="calc">
+    <div class="top">
+        <b>Calculator</b>
+        <button id="hbtn" class="ghost" aria-label="Show history">History</button>
     </div>
 
-    <Script src="Script.js"></script>
+    <div class="screen">
+        <div class="preview" id="preview" aria-live="polite"></div>
+        <button class="res" id="res" title="Click to copy">0</button>
+    </div>
 
+    <div class="keys" id="keys">
+        <button data-k="(" class="fn">(</button>
+        <button data-k=")" class="fn">)</button>
+        <button data-k="√" class="fn">√</button>
+        <button data-k="^2" class="fn">x²</button>
+
+        <button data-k="AC" class="clear">AC</button>
+        <button data-k="⌫" class="fn">⌫</button>
+        <button data-k="%" class="fn">%</button>
+        <button data-k="÷" class="operator">÷</button>
+
+        <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+        <button data-k="×" class="operator">×</button>
+
+        <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+        <button data-k="−" class="operator">−</button>
+
+        <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+        <button data-k="+" class="operator">+</button>
+
+        <button data-k="±" class="fn">±</button><button data-k="0">0</button><button data-k=".">.</button>
+        <button data-k="=" class="equals">=</button>
+    </div>
+
+    <aside class="hist" id="hist" aria-label="History">
+        <div class="hh"><b>History</b><span><button id="hclr" class="ghost">Clear</button><button id="hclose" class="ghost">Close</button></span></div>
+        <ul id="hl"></ul>
+    </aside>
+    <div class="toast" id="toast"></div>
+</main>
+<script src="Script.js"></script>
 </body>
-
 </html>
